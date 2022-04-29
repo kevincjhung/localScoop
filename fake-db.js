@@ -39,7 +39,8 @@ const shopInfo = {
     delivery: true,
     pickUp: true,
     kmRadius: 20,
-    rating:4.94
+    rating:4.94,
+    shopProfilePhoto:"/uploads/175f1e62ee34e7f0a81fb56d7ff3517c.jpeg"
   },
 
   102: {
@@ -53,7 +54,8 @@ const shopInfo = {
     delivery: true,
     pickUp: true,
     kmRadius: 20,
-    rating:4.85
+    rating:4.85,
+    shopProfilePhoto:"/uploads/175f1e62ee34e7f0a81fb56d7ff3517c.jpeg"
   },
 
   103: {
@@ -67,7 +69,8 @@ const shopInfo = {
     delivery: false,
     pickUp: true,
     kmRadius: 30,
-    rating:4.76
+    rating:4.76,
+    shopProfilePhoto:"/uploads/175f1e62ee34e7f0a81fb56d7ff3517c.jpeg"
   }
 }
 
@@ -173,6 +176,16 @@ function addUser(username, password) {
 }
 
 
+function addShop(shopObj){
+  let newStoreId = Math.max(...Object.keys(shopInfo).map(Number)) + 1;
+
+  shopInfo[newStoreId] = shopObj;
+  // console.log(shopObj)
+  // console.log(shopInfo)
+  console.log()
+}
+
+
 
 // function decoratePost(post) {
 //   post = {
@@ -185,8 +198,8 @@ function addUser(username, password) {
 // }
 
 /**
- * @param {*} n how many posts to get, defaults to 5
- * @param {*} category which sub to fetch, defaults to all categories
+ * @param {number} n how many posts to get, defaults to 5
+ * @param {string} category which sub to fetch, defaults to all categories
  */
 function getProducts(n = 5, category = undefined) {
   let allProducts = Object.values(products);
@@ -242,9 +255,102 @@ function editProduct(productId, changes = {}) {
   }
 }
 
+
+
+/**
+ * @param {number} shopId, id of the shop you want to edit. ex. 102
+ * @param {object} changes, object with changes you wish to make. parameter key name must match 
+ * shopInfo {} in fake-db.js exactly. 
+ */
+function editShop(shopId, changes = {}){
+  let product = shopInfo[shopId];
+
+  if (changes.phoneNum) {
+    product.phoneNum = changes.phoneNum;
+  }
+  
+  if (changes.email) {
+    product.email = changes.email;
+  }
+
+  if (changes.password) {
+    product.password = changes.password;
+  }
+
+  if (changes.address) {
+    product.address = changes.address;
+  }
+
+  if (changes.product) {
+    product.product = changes.product;
+  }
+
+  if (changes.delivery) {
+    product.delivery = changes.delivery;
+  }
+
+  if (changes.pickUp) {
+    product.pickUp = changes.pickUp;
+  }
+
+  if (changes.kmRadius) {
+    product.kmRadius = changes.kmRadius;
+  }
+
+  if (changes.rating) {
+    product.rating = changes.rating;
+  }
+
+  if (changes.shopProfilePhoto) {
+    product.shopProfilePhoto = changes.shopProfilePhoto;
+  }
+}
+
+
 function deleteProduct(productId) {
   delete products[productId];
 }
+
+
+/**
+ * 
+ * @param {number} storeID 
+ * @returns {string} profilePhotoFileName. undefined if no shop with given storeID exists
+ */
+function getShopProfilePhotoFilename(givenStoreID) {
+  // check if givenStoreID is number, if not, return undefined
+  if(typeof(givenStoreID) !== 'number' && givenStoreID > 0){
+    return;
+  }
+  
+  let shop = shopInfo[givenStoreID];
+
+  // no shop exists with the given ID
+  if(shop == undefined){
+    return;
+  }
+
+  return shop.shopProfilePhoto;
+}
+
+/**
+ * @param {string} inputShopName 
+ * @returns {boolean} false if no shop with given name exists. Returns true if shop with given name exists
+ */
+function doesShopExist(inputShopName){
+  for(shopIndex in shopInfo){
+    let storeNameDB =  shopInfo[shopIndex].storeName
+    
+    if (inputShopName == storeNameDB){
+      return true;
+    } 
+  }
+
+  return false;
+}
+
+
+
 
 function getCategory() {
   return Array.from(new Set(Object.values(products).map(product => product.category)))
@@ -271,6 +377,8 @@ function getWishList(){
   
 }
 
+
+
 module.exports = {
   debug,
   addUser,
@@ -282,5 +390,9 @@ module.exports = {
   editProduct,
   deleteProduct,
   getCategory,
+  getShopProfilePhotoFilename,
+  editShop,
+  doesShopExist,
+  addShop
 };
 

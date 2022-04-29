@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Document</title>
+  <!-- <link rel="preconnect" href="https://fonts.googleapis.com"> -->
+
+  <!-- Yoyo's original local css  -->
+  <link rel="stylesheet" href="../../styles.css">
+  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> -->
+
+  <!-- link bootstrap to express ejs  -->
+  <!-- <link rel="stylesheet" href="./css/bootstrap.min.css"> -->
+
+
+</head>
+
+<body>
+  <header class="shop-setup-header">
+    <a href="http://someLink" class="returnArrow">
+      <svg width="37" height="37" viewBox="0 0 37 37" fill="none" xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink">
+        <rect width="37" height="37" fill="url(#pattern0)" />
+        <defs>
+          <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
+            <use xlink:href="#image0_146_7727" transform="scale(0.01)" />
+          </pattern>
+          <image id="image0_146_7727" width="100" height="100"
+            xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAABmJLR0QA/wD/AP+gvaeTAAABY0lEQVR4nO3cPUpjURzG4dcBLWbikkTL6ccVuBJ34Ea0FSsLP9YzzVSjoEUSsAhRr9fcF+7zwCFNLvzJjwM3cDgJAAAAAAAAAACjWCS5WH0ysZ9JbpO8JHlMcjjtOPP2NsZ6iTKRTTFEmcgiyV02x1iv68mmm5ltO2O9/iU5nmrAORGjiBhFxCgiRhExiohRRIwiYhQRo4gYRcQoIkYRMYqIUUSMImIUEaOIGEXEGNHeF59fZHng4GjLd56TnGV5WmRu/q7WTvzK+6dD5r7OP/uj/vjsAysHSS6zfWcwwJAg+0mukvweeRYyfIfwTYYEeUryJ8nNyLOQ4Tvkf5LTJPcjzkK89n63nb72rn30j+HJrgebM1EKiVJIlEKiFBKlkCiFRCkkSiFRColSSJRCohQSpZAohUQpJEohUQqJUkiUQi4wK7RtpzzEFX+T2BRFjIm9jSJGCRcpAwAAAAAAAAC0eQUp0+wlmfscKgAAAABJRU5ErkJggg==" />
+        </defs>
+      </svg>
+    </a>
+  </header>
+
+  <div class="centerBox m-font">
+    <P class="">
+      Do you want to offer <br>
+      deliveries or pick up <br>
+      in-store or both?
+    </P>
+    <div class="delivery_pickUp m-font">
+      <button class="deliveryBtn" value="delivery">Delivery</button>
+      <button class="deliveryBtn" value="pickup">Pick up in-store </button>
+    </div>
+    <div id="radius" style="display:none">
+      <label for="deliveryDistance">Please choose your KM radius:</label>
+      <div class="dropdownMenu">
+        <select name="deliveryDistance" id="deliveryDistance" onchange="selectedRadius()">
+          <option value="10">10km</option>
+          <option value="20">20km</option>
+          <option value="30">30km</option>
+          <option value="40">40km</option>
+        </select>
+      </div>
+    </div>
+    <button class="yellow-bn m-bn" onclick="http://localhost:8000/shop_setup/shop_setUp_6">
+      Next
+    </button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
+
+  <script>
+
+// document.getElementById('radius').style.pointerEvents = 'none';
+//  document.getElementById("radius").style.display = "block"
+// console.log(document.getElementById("radius"))
+
+// var nodes = document.getElementById("radius").getElementsByTagName('*');
+// for(var i = 0; i < nodes.length; i++){
+//      nodes[i].disabled = true;
+// }
+
+
+    let deliveryMethodList = []
+    document.addEventListener("DOMContentLoaded", () => {
+      // let deliveryMethodType = document.getElementsByClassName("delivery_pickUp").querySelectorAll(".deliveryBtn")
+      let deliveryMethodType = document.querySelector(".delivery_pickUp").children
+// console.log("pppp",document.querySelector(".delivery_pickUp").children)
+      for (let typeBtn of deliveryMethodType) {
+        typeBtn.addEventListener("click", () => {
+          console.log("classList",typeBtn.classList)
+          //if the product type btn  was chosen before
+          if (typeBtn.classList.contains("clicked")) {
+            typeBtn.classList.remove("clicked")
+            let index = deliveryMethodList.indexOf(typeBtn.value);
+            if (index !== -1) {
+              deliveryMethodList.splice(index, 1);
+              console.log("no", deliveryMethodList)
+            }
+            //if product type was not clicked before
+          } else {
+            typeBtn.classList.add("clicked")
+            deliveryMethodList.push(typeBtn.value)
+            if(deliveryMethodList.includes("delivery")){
+              document.getElementById("radius").style.display = "block";
+            }
+            console.log("yes", deliveryMethodList)
+          }
+        })
+      }
+    })
+
+
+    //pick one of the radius,selectedDistance will be the value of selected radius.
+
+    let selectedDistance = 10;
+
+    function selectedRadius() {
+      selectedDistance = document.getElementById("deliveryDistance").value
+
+      console.log(selectedDistance)
+    }
+
+    // if(deliveryMethodList && )
+
+
+
+
+
+    let finishUpButton = document.body.querySelector(".yellow-bn");
+
+    finishUpButton.onclick = function () {
+      location.href = "shop_setUp_6";
+    } 
+  </script>
+</body>
+
+</html>

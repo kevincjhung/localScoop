@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
+    <title>Welcome to LocalScoop</title>
+    <link rel="stylesheet" href="../../styles.css">
+    
+    <style>
+        img {
+            max-width: 40%;
+            margin-top: 50px;
+        }
+
+        .customerButton {
+            background-color: #C3D99D;
+        }
+        
+        .yellow-bn.yellow-bn {
+            width: 80%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="centerBox m-font">
+        <div class="container">
+            <img src="logo/localscooplogo 2.png" alt="">
+        </div>
+        <button class="yellow-bn s-bn">For Business</button>
+        <button class="yellow-bn s-bn customerButton">For Customers</button>
+        <!-- <img src="/uploads/myImage-1651002480271.jpg"> -->
+    </div>
+</body>
+<script>
+    let businessButton = document.body.querySelectorAll(".yellow-bn")[0];
+    let customerButton = document.body.querySelectorAll(".yellow-bn")[1];
+    
+    businessButton.onclick = function () {
+      location.href = "/shop_setup/shop_setup_1";
+    } 
+
+    customerButton.onclick = function () {
+      location.href = "/shop_setup/shop_setup_1";
+    } 
+  </script>
+</html>

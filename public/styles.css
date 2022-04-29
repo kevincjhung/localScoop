@@ -1,0 +1,227 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Fraunces:ital,wght@1,200&family=Playfair+Display:ital,wght@1,500&family=Poppins:wght@100;200;300;400;500;600&display=swap');
+
+
+body{
+    background-color: #F7F5F3;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+}
+
+.shop-setup-header{
+    padding-top: 10%;
+    margin:4% 5% 2% 5%
+}
+
+.centerBox{
+    text-align: center;
+
+}
+/* .container{
+    text-align: center;
+} */
+
+.shopReady{
+    font-weight: 400;
+}
+
+
+.yellow-bn{
+    border:solid 2px;
+    border-radius: 15px;
+    background-color: #E3974F;  
+    color:white ;
+    font-size: 18px;
+    width: 355px;
+    height:55px;
+    margin-top: 40px;
+
+}
+
+.l-bn{
+    width: 286px;
+    height:52px ;
+}
+
+.m-bn{
+
+    width: 250px;
+    height:48px ;
+}
+
+.s-bn{
+    width: 184px;
+    height:45px ;
+
+}
+.xs-bn{
+    width: 150px;
+    height:38px ;
+    border-radius: 10px;
+}
+
+
+
+/*Yasmina*/
+
+.btn-white{
+    border:solid 2px;
+    border-radius: 5px;
+    background-color: white;
+    /*color:white ;*/
+    font-size: 18px;
+    width: 355px;
+    height:55px;
+    margin-top: 15px;
+}
+
+.form-box{
+
+    margin: 15% 0%;
+    font-size:20px;
+    padding: 3% 5%;
+}
+
+
+.address-box{
+
+    margin: 40% 0%;
+    font-size:20px;
+    padding: 3% 5%;
+    text-align: center;
+
+}
+
+.product-box{
+
+    margin: 30% 0;
+    font-size:20px;
+    padding: 3% 6%;
+    text-align: center;
+
+}
+
+
+
+.form-control {
+    height: 48px;
+    width: 335px;
+    border-color: black;
+}
+
+.xl-font{
+    font-size:30px ;
+}
+
+.l-font{
+    font-size:24px ;
+}
+
+.m-font{
+    font-size:20px ;
+}
+
+.s-font{
+    font-size:18px ;
+}
+
+.xs-font{
+    font-size:16px ;
+}
+
+.delivery_pickUp{
+ 
+    /* height: 10em; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap:10px;
+    /* background-color: white; */
+    margin-top: 40px;
+    margin-bottom: 40px;
+} 
+
+
+ .deliveryBtn{
+    border:solid black 1px;
+    width:160px;
+    height: 189px;
+    background-color: white;
+    font-size: 20px;
+    font-weight: 300;
+  
+} 
+
+/* .pickUp{
+    border:solid black 1px;
+    width:160px;
+    height: 189px;
+    background-color: white;
+    float: right;
+}  */
+
+#deliveryDistance{
+    background-color: white;
+    border-radius: 5px;
+    width: 200px;
+    height: 40px;
+
+    margin: 10px;
+
+}
+
+
+
+/*Components*/
+
+/*footer*/
+
+.mobile-nav {
+    background: antiquewhite;
+    position: fixed;
+    bottom: 0;
+    height: 10%;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    /*box-shadow: 0 -8px 8px -4px rgba(0 0 0 2);*/
+
+}
+
+.bloc-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bloc-icon img {
+    /*width: 30px;*/
+}
+
+.fa-solid{
+    width:20px;
+    height:auto
+
+    font-size: 20px;
+    font-weight: 300;
+}
+
+/* .saveBtn:hover{
+    background-color: #D4E6B5;
+    color: white;
+    
+} */
+
+/* .saveBtn:active {
+  background-color:wheat;
+  
+  transform: translateY(4px);
+} */
+
+
+
+.clicked{
+    background-color: #D4E6B5;
+    /*color: #E3974F;*/
+
+}

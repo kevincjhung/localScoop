@@ -1,0 +1,139 @@
+/**
+ * Yoyo's old app.js file
+ */
+const express = require("express");
+const bodyParser = require("body-parser")
+
+const app = express();
+const cookieParser = require('cookie-parser')
+
+const cookieSession = require("cookie-session");
+app.use(cookieSession({
+  name: 'session',
+  keys: ['asdfasdbvaghjdfghaga'],
+  maxAge: 24 * 60 * 60 * 1000 //  Cookie Options:24 hours
+}))
+const router = express.Router();
+
+
+app.use(cookieParser())
+
+const db = require("./fake-db");
+const { redirect } = require("express/lib/response");
+// const res = require("express/lib/response");
+
+// app.use(express.static('public'))
+
+app.set('view engine', 'ejs')
+app.use(bodyParser.urlencoded({ extended: false }));
+
+
+router.get("/", (req, res) => {
+  let user = req.session.username ? req.session.username : null;
+  let posts = db.getProducts(20)
+  res.render("index", { user, posts })
+})
+
+
+router.get("/login", (req, res) => {
+  res.render("login")
+})
+
+
+router.post("/login", (req, res) => {
+  if (req.body.username) {
+    let formtype = req.body.formtype
+    if (formtype === "login") {
+      let user = db.getUserByUsername(req.body.username)
+      if (user && req.body.password === user.password) {
+        req.session.username = user
+        res.redirect("/")  
+      }
+    } else {
+      let newUser = db.addUser(req.body.username, req.body.password)
+      req.session.username = newUser
+      res.redirect("/")
+    }
+  }
+})
+
+
+router.get("/logout", (req, res) => { 
+  req.session = null;
+  res.redirect("/");
+})
+
+
+router.get("/category/product", (req, res) => {
+  let category = db.getCategory()
+  let user = req.session.username ? req.session.username : null;
+  let products = db.getProducts(20)
+  res.render("/category/product", { user, category, products })
+})
+
+
+
+router.get("/product/:id", (req, res) => {
+  let currentProduct = db.getProduct(req.params.id)
+  let user = req.session.username ? req.session.username : null;
+  res.render("?", { currentProduct, user, })
+})
+
+
+router.post("/product/create/new", (req, res) => {
+  let user = req.session.username ? req.session.username : null;
+  let productName = req.body.productName
+  let category = req.body.category
+  let storeId = req.body.storeId
+  let description = req.body.description
+  let price = req.body.price
+  let deliveryFee = req.body.deliveryFee
+  let tax = req.body.tax
+  let product = db.addProduct(storeId, productName, category, description,price, deliveryFee,tax) 
+  let productId = product.productId
+  let products = db.getProducts(20)
+  products[productId] = product
+  res.redirect(`/products/show/${productId}`)
+})
+
+
+
+router.get("/products/delete/:id", (req, res) => {
+  let productId = parseInt(req.params.productId)
+  db.deletePost(productId);
+  let products = db.getProducts(20)
+  products = products.filter(product => product.productId !== productId)
+  res.redirect("/")
+})
+
+// router.get("/posts/edit/:id", (req, res) => {
+//   let user = req.session.username ? req.session.username : null;
+//   let currentPost = db.getPost(req.params.id)
+//   res.render("posts/edit", { currentPost, user })
+// })
+
+router.post("/products/update/:id", (req, res) => {
+  let productId = parseInt(req.params.productId)
+  let products = db.getProducts(20)
+  let temp = products.filter(post => post.productId === productId)
+  let product = temp[0];
+  let changes  = {
+    productName:req.body.productName,
+    category:req.body.category,
+    productName:req.body.productName,
+    description:req.body.description,
+    price:req.body.price,
+    deliveryFee:req.body.deliveryFee,
+    tax:req.body.tax,
+  }
+  editProduct(productId, changes = {})
+
+  res.redirect(`/products/show/${productId}`)
+})
+
+
+
+app.use("/", router)
+
+
+module.exports = app;
