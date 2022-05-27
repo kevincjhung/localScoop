@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"
+            integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk="
+            crossorigin="anonymous"
+    />
+
+    <link rel="stylesheet" href="/chat.css">
+
+    <title> Lobby </title>
+
+    <style>
+        body {
+            background-color: #F7F7F3;
+        }
+
+    </style>
+</head>
+<body>
+
+
+
+<header class="fixed_header">
+    <!--Back button-->
+
+    <nav class="nav-wrapper seller-shop">
+        <div class="nav-wrapper--left seller-shop">
+            <a onclick="history.back()"><span class="material-icons nav-icon">arrow_back</span></a>
+        </div>
+        <div class="nav-wrapper--right seller-shop" style="margin-right:5px ">
+
+            <a href="/chat/store"><span class="material-icons nav-icon seller-shop">mode_comment</span></a>
+            <a href="#"><span class="material-icons nav-icon seller-shop">settings</span></a>
+        </div>
+    </nav>
+
+</header>
+<main>
+
+    <div class="top_space"></div>
+
+    <!----------Groups--------->
+    <div class="lobby-container">
+        <div class="lobby-users ">
+
+
+<%if( storeChatList.length !== 0){
+storeChatList.forEach(chat=>{
+
+    let last_timestamp = parseInt(chat.last_timestamp)
+    let date = new Date(last_timestamp);%>
+            <a href="/chat/room/<%=chat.chat_id%>">
+                    <div class="user">
+
+                        <div class="img-container"> <img src=<%=chat.buyer_profile_photo%>>   </div>
+                        <div class="messageInfo_container">
+                            <div>
+                                <p class="storeName"><%=chat.buyer_firstname%></p>
+                                <p><%=chat.last_message%></p>
+                            </div>
+                        </div>
+                        <!--                            PLACEHOLDER-->
+            <div class="date_container"><p><span><%= date.getHours()+ ":"+ date.getMinutes()%></span></p></div>
+        </div>
+            </a>
+        <%  });
+
+            }else{%>
+                <div class="comingSoon">Your inbox is empty.</div>
+            <%  } %>
+
+        </div>
+    </div>
+
+</main>
+</div>
+
+<%- include('../elements/buyer_footer', {page:"blah"}) %>
+
+</body>
+</html>

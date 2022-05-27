@@ -1,4 +1,5 @@
 // require
+const help = require("../help")
 const express = require('express');
 const multer = require('multer');
 const ejs = require('ejs');
@@ -13,7 +14,7 @@ const router = express.Router();
 /* Global Variables */
 
 // GET /seller_shop/seller_shop
-router.get("/seller_shop/:id", (req, res) => {
+router.get("/seller_shop/:id", help.sellerAuthorized, (req, res) => {
     let storeId = req.params.id// req.params.anything will always be a string
     let shop = db.getShop(+storeId)
     let shopPostsList = db.getPostsByStoreId(+storeId)

@@ -2,99 +2,216 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../styles.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <%- include('../elements/seller_footer.ejs', {page:"page_landing"}) %>
-
-    <title>product posting 1</title>
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"> -->
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="../../styles.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<style>
+		 img {
+                height: 200px;
+                width: 250px;
+                border-radius: 15px;
+                object-fit: contain;
+            }
+	</style>
+	<title>Product Posting: step1</title>
+	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"> -->
 </head>
+
 <body>
-    <!-- for image upload -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<!-- for image upload -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+		integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
 
-    <div class="top_space"></div>
-    <div class="container centerBox m-font">
+	<div class="top_space"></div>
+	<div class="container centerBox m-font">
 
-        <img src="<%= typeof file != 'undefined' ? file : 'https://majobacooks.com/wp-content/uploads/2021/03/pngkey.com-ega-png-2332677.png' %>"
-            class="responsive-img" style="max-width: 60%; margin-top: 10px; border-radius: 10%;">
+		<img
+			src="<%= typeof file != 'undefined' ? file : 'https://majobacooks.com/wp-content/uploads/2021/03/pngkey.com-ega-png-2332677.png' %>"
+			class="responsive-img" style="max-width: 60%; margin-top: 10px; border-radius: 10%;">
 
-        <form action="/product_post/upload" method="POST" enctype="multipart/form-data" id="imgForm">
+		<div class="imageInsertLocation"></div>
+
+		<form id="imageForm">
+			<div class="file-field input-field">
+				<input id="imageInput" class="greenBtn" type="file" accept="image/*" name="myImage" />
+				<button type="submit" class="greenBtn">Upload</button>
+			</div>
+			<!-- </form> -->
+
+
+			<!-- <form action="/product_post/upload" method="POST" enctype="multipart/form-data" id="imgForm">
             <div class="file-field input-field">
                 <label for="file-upload" class="greenBtn">
                     Upload Image
                 </label>
                 <input id="file-upload" type="file" accept="image/*" name="myImage" onchange="uploadImg()" />
             </div>
-            <!-- <button type="submit" class="btn">UPLOAD</button> -->
-        </form>
+            <button type="submit" class="btn">UPLOAD</button>
+        </form> -->
 
-    </div>
-    <hr>
-    <form action="/product_post/product_post_2" method="POST">
-        <input name="imgUrl" class="displayNone" value="<%= typeof file != 'undefined' ? file : "" %>">
-        <div class="productPost">
-            <label for="productName">Item Name :</label>
-            <input type="text" name="productName" id="productName" placeholder="Nike Sage Lows" class="inputborder" required>
+			<!-- </div>
+	<hr>
+	<form action="/product_post/product_post_2" method="POST"> -->
+			<input name="imgUrl" class="displayNone" value="<%= typeof file != 'undefined' ? file : "" %>">
+			<div class="productPost">
+				<label for="productName">Item Name :</label>
+				<input type="text" name="productName" id="productName" placeholder="Nike Sage Lows" class="inputborder"
+					required>
 
-        </div>
-        <hr>
-        <div class="productPost">
-            <label for="description">Description :</label>
-            <textarea name="description" id="description" placeholder="Size 8 Womens US shoes"
-                class="inputborder"></textarea>
-        </div>
-        <hr>
-        <div class="productPost">
-            <label for="category">Category :</label>
-            <select name="category" id="category" class="inputborder" required>
-                <option value="shoes">Shoes</option>
-                <option value="top">Top</option>
-                <option value="pants">Pants</option>
-                <option value="accessories">Accessories</option>
-            </select>
-        </div>
-        <hr>
-        <div class="productPost">
-            <label for="deliveryFee">Delivery Fee :</label>
-            <select name="deliveryFee" id="deliveryFee" class="inputborder">
-                <option value="10">$10.00</option>
-                <option value="20">$15.00</option>
-                <option value="30">$20.00</option>
-            </select>
-        </div>
+			</div>
+			<hr>
+			<div class="productPost">
+				<label for="description">Description :</label>
+				<textarea name="description" id="description" placeholder="Size 8 Womens US shoes"
+					class="inputborder"></textarea>
+			</div>
+			<hr>
+			<div class="productPost">
+				<label for="category">Category :</label>
+				<select name="category" id="category" class="inputborder" required>
+					<option value="shoes">Shoes</option>
+					<option value="top">Top</option>
+					<option value="pants">Pants</option>
+					<option value="accessories">Accessories</option>
+				</select>
+			</div>
+			<hr>
+			<div class="productPost">
+				<label for="deliveryFee">Delivery Fee :</label>
+				<select name="deliveryFee" id="deliveryFee" class="inputborder">
+					<option value="10">$10.00</option>
+					<option value="20">$15.00</option>
+					<option value="30">$20.00</option>
+				</select>
+			</div>
 
-        <hr>
-        <div class="productPost">
-            <label for="productPrice">Item Price : </label>
-            <input type="number" name="productPrice" id="productPrice" placeholder="$125" class="inputborder" required>
-        </div>
-        <hr>
-        <div class="center">
-            <button class="yellow-bn m-bn extraSpace">Post Product</button>
-        </div>
-    </form>
-<div class="extraspace"></div>
-    <footer>
-        <%- include('../elements/seller_footer',{page:"product_post"}) %>
-    </footer>
+			<hr>
+			<div class="productPost">
+				<label for="productPrice">Item Price : </label>
+				<input type="number" name="productPrice" id="productPrice" placeholder="$125" class="inputborder" required>
+			</div>
+			<hr>
+			<div class="center">
+				<button class="yellow-bn m-bn extraSpace postProduct">Post Product</button>
+			</div>
+		</form>
+		<div class="extraspace"></div>
+		<footer>
+			<%- include('../elements/seller_footer',{page:"product_post"}) %>
+		</footer>
 </body>
+
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"
-    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+	integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 
+<!-- script below originally s3_frontend.js. Decided to do it inline -->
 <script>
+	const imageForm = document.querySelector("#imageForm")
+	const imageInput = document.querySelector("#imageInput")
 
-    function uploadImg() {
-        let fileUpload = document.getElementById("file-upload").value
-        if (fileUpload) {
-            document.getElementById("imgForm").submit();
-        }
-    }
+
+	// post product button at the bottom redirects to the next page
+	const postProductButton = document.querySelector(".postProduct")
+	postProductButton.addEventListener("click", (event) => {
+		window.location = "/product_post/product_post_2"
+	})
+
+
+
+	imageForm.addEventListener("submit", async event => {
+		event.preventDefault()
+		const file = imageInput.files[0]
+
+		/**
+		 * make 2 requests, 
+		 * 	1st to get the s3 url. 
+		 * 	2nd to send it to the backend
+		 */
+		let imageUrl;
+
+		try {
+			// get secure url from our server
+			const { url } = await fetch("/s3Url").then(res => res.json())
+
+			// post the image direclty to the s3 bucket
+			await fetch(url, {
+				method: "PUT",
+				headers: {
+					"Content-Type": "multipart/form-data"
+				},
+				body: file
+			})
+
+			imageUrl = url.split('?')[0]
+			console.log(imageUrl)
+
+			// post requst to my server to store any extra data
+			const postParam = {
+				imageUrl
+			}
+
+			console.log(postParam)
+
+			// ajax request to routes
+			// 	await fetch("/product_post/uploadS3", {
+			// 		method: "POST",
+			// 		body: JSON.stringify(postParam),
+			// 		headers: {
+			// 			"Content-Type": "application/json"
+			// 		},
+			// 	})
+
+		} catch (error) {
+			console.log("ERROR", error)
+		}
+
+
+		// if the user already added a photo on the page, delete it
+		if(document.querySelector(".newProductImage") !== null){
+			document.querySelector(".newProductImage").remove()
+		}
+
+		// append image on document
+		const img = document.createElement("img")
+		img.src = imageUrl
+		img.classList = 'newProductImage'
+
+		let imageLogo = document.querySelector(".responsive-img")
+
+		let imageInsertionLocation = document.querySelector(".imageInsertLocation")
+		console.log(imageInsertionLocation)
+
+		// append the new image where the image logo used to be
+		imageInsertionLocation.appendChild(img)
+
+		// remove the image logo
+		imageLogo.remove()
+
+		const productName = document.querySelector("#productName").value
+		const description = document.querySelector("#description").value
+		const category = document.querySelector("#category").value
+		const deliveryFee = document.querySelector("#deliveryFee").value
+		const productPrice = document.querySelector("#productPrice").value
+
+		let productPostInfo = { imageUrl, productName, description, category, deliveryFee, productPrice };
+
+
+		// ajax request to routes
+		await fetch("/product_post/product_post_1", {
+			method: "POST",
+			credentials: "same-origin",
+			body: JSON.stringify(productPostInfo),
+			headers: {
+				"Content-Type": "application/json"
+			},
+		})
+
+		// window.location = "/product_post/product_post_2"
+	})
 </script>
 </html>

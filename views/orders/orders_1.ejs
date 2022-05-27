@@ -6,176 +6,137 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Your Shop Orders</title>
 
-    <%- include('../elements/seller_footer.ejs', {page:"page_landing"}) %>
     <link rel="stylesheet" href="../../styles.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <style>
-    main * {
-      padding: 1%;
-      box-sizing: border-box;
-    }
+      main * {
+        padding: 1%;
+        box-sizing: border-box;
+      }
 
 
-    .slider {
-      margin:5%;
-      overflow-x: scroll;
-    }
+      .slider {
+        margin: 5%;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        display: grid;
+        max-height: 320px;
+      }
 
-    .slider-inner {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 5px; 
-      pointer-events: none; 
-      padding: 5px;
-    }
+      .slider-inner {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 5px;
+        pointer-events: none;
+        padding: 5px;
+        color: black;
+      }
 
-    /* the card */
-    .slider-img {
-      background-color: white;
-      text-align: center;
+      /* the card */
+      .slider-img {
+        background-color: white;
+        text-align: center;
+        border-radius: 20px;
+        width: 250px;
+        height: 300px;
+        box-shadow: 2px 10px 10px 4px rgba(0, 0, 0, 0.30);
+      }
 
-      border-radius: 20px;
-      width: 250px;
-      height: 300px;
-      box-shadow: 2px 10px 10px 4px rgba(0, 0, 0, 0.30);
-    }
+      .slideImg {
+        border-radius: 10px;
+        width: 200px;
+        height: 200px;
+        object-fit: contain;
+      }
 
-    .slideImg {
-      border-radius: 10px;
-      width: 200px;
-      height: 200px;
-      object-fit: contain;
-    }
+      .draft {
+        display: flex;
+        justify-content: space-between;
+        margin: 5%;
 
-    .draft{
-      display: flex;
-      justify-content: space-between;
-      margin: 5%;
+      }
 
-    }
-
-    .grid{
-      display: flex;
-      flex-direction: row;
-      max-width: 90%;
-      height: auto;
+      .grid {
+        display: flex;
+        flex-direction: row;
+        max-width: 90%;
+        height: auto;
         margin-left: 20px;
+      }
 
-        /*width:90%*/
+      .draftImg {
+        border-radius: 10px;
+        width: 120px;
+        height: 120px;
+      }
 
-
-    }
-
-    .draftImg{
-      border-radius: 10px;
-      width: 120px;
-      height: 120px;
-    }
-
-    .spaceAtBottom {
-      height: 200px;
-    }
-  </style>
+      .spaceAtBottom {
+        height: 200px;
+      }
+    </style>
 </head>
+
 <body>
 
-    <!--  HEADER -->
-    <header class="fixed_header">
-        <!--Back button-->
-        <div class="nav-wrapper seller-shop seller-landing-header">
-            <div class="nav-wrapper--left seller-shop">
-                <span>Product Posts</span>
-            </div>
-            <div class="nav-wrapper--right seller-shop">
-
-                <a href="#"><span class="material-icons nav-icon seller-shop">mode_comment</span></a>
-                <a href="#"><span class="material-icons nav-icon seller-shop">settings</span></a>
-            </div>
-
-        </div>
-    </header>
-    <main>
+  <!--  HEADER -->
+  <header class="fixed_header">
+    <!--Back button-->
+    <div class="nav-wrapper seller-shop seller-landing-header">
+      <div class="nav-wrapper--left seller-shop">
+        <span>Product Posts</span>
+      </div>
+      <div class="nav-wrapper--right seller-shop">
+        <a href="/chat/store"><span class="material-icons nav-icon seller-shop">mode_comment</span></a>
+        <a href="#"><span class="material-icons nav-icon seller-shop">settings</span></a>
+      </div>
+    </div>
+  </header>
+  <main>
 
     <!-- the carousel slider of cards -->
     <div class="top_space"></div>
 
     <div class="slider">
-      <div class="slider-inner">  
-          <div class="slider-img">
-            <%= carouselSliderData[0].updateTime %> 
-            <img src="/uploads/post8.jpg" alt="" class="slideImg"> <br>
-            <%= carouselSliderData[0].productName %> <br>
-            <%= carouselSliderData[0].productPrice %> <br>
-          </div>
-          <div class="slider-img">
-            <%= carouselSliderData[1].updateTime %> 
-            <img src="https://media.istockphoto.com/photos/portrait-of-a-young-pretty-female-student-in-a-white-hoodie-casual-picture-id1248498822?k=20&m=1248498822&s=612x612&w=0&h=EzpFyZF5d2sFKsQh-eV-jIi5JleYAZDJfSSnKlRy-iU=" alt="" class="slideImg"> <br>
-            <%= carouselSliderData[1].productName %> <br>
-            <%= carouselSliderData[1].productPrice %> <br>
-          </div>
-          <div class="slider-img">
-            <%= carouselSliderData[2].updateTime %> 
-            <img src="https://sneakernews.com/wp-content/uploads/2021/08/Nike-Air-Force-1-Low-DC2911-400-4.jpg" alt="" class="slideImg"> <br>
-            <%= carouselSliderData[2].productName %> <br>
-            <%= carouselSliderData[2].productPrice %> <br>
-          </div>
-          <div class="slider-img">
-            <%= carouselSliderData[3].updateTime %> 
-            <img src="https://www.cleveland.com/resizer/s-qN2ZoMrE_jRSJy7AE6dsqJiC0=/1280x0/smart/image.cleveland.com/home/cleve-media/width600/img/ent_impact_home/photo/lebron-15-ghostjpg-485c5c2f3d667d4a.jpg" alt="" class="slideImg"> <br>
-            <%= carouselSliderData[3].productName %> <br>
-            <%= carouselSliderData[3].productPrice %> <br>
-          </div>
-          <div class="slider-img">
-            <%= carouselSliderData[4].updateTime %> 
-            <img src="https://herschel.ca/content/dam/herschel/products/10020/10020-02041-OS_01.jpg.sthumbnails.1000.1250.jpg" alt="" class="slideImg"> <br>
-            <%= carouselSliderData[4].productName %> <br>
-            <%= carouselSliderData[4].productPrice %> <br>
-          </div>
-          <div class="slider-img">
-            <%= carouselSliderData[5].updateTime %> 
-            <img src="https://images.lululemon.com/is/image/lululemon/LM9A07S_047748_1?wid=1280&op_usm=0.5,2,10,0&fmt=webp&qlt=80,1&fit=constrain,0&op_sharpen=0&resMode=sharp2&iccEmbed=0&printRes=72" alt="" class="slideImg"> <br>
-            <%= carouselSliderData[5].productName %> <br>
-            <%= carouselSliderData[5].productPrice %> <br>
-          </div>
-          <div class="slider-img">
-            <%= carouselSliderData[6].updateTime %> 
-            <img src="https://www.converse.com/dw/image/v2/BCZC_PRD/on/demandware.static/-/Sites-cnv-master-catalog/default/dwd2120ba9/images/d_08/M9621_D_08X1.jpg?sw=406" alt="" class="slideImg"> <br>
-            <%= carouselSliderData[6].productName %> <br>
-            <%= carouselSliderData[6].productPrice %> <br>
-          </div>
-        
+      <div class="slider-inner">
 
+        <% for(let orderIndex=0; orderIndex < carouselSliderData.length; orderIndex++){ %>
+          <div class="slider-img">
+            <%= carouselSliderData[orderIndex].how_many_days_ago %> <br>
+              <a href="/add_cart/add_cart/<%= carouselSliderData[orderIndex].product_id %>">
+                <img src="<%= carouselSliderData[orderIndex].image_file_paths %>" alt="" class="slideImg"> <br>
+              </a>
+              <%= carouselSliderData[orderIndex].product_name %> <br>
+                <%= carouselSliderData[orderIndex].product_price %> <br>
+          </div>
+          <% } %>
       </div>
     </div>
 
-
-    <!--  DESCRIPTION -->
     <div class="store_info">
       <a href="/orders/orders_2">
         <button type="submit" class="yellow-bn m-3">Sold Products</button>
       </a>
     </div>
-    
+
     <div class="draft">
-    <div>Drafts</div> 
-    <div>&Rang;</div>
-  
-  </div>
+      <div>Drafts</div>
+      <div>&Rang;</div>
+    </div>
+    
     <!--THE GRID PART -->
     <!--https://stackoverflow.com/questions/65649642/square-css-grid-with-square-images-->
     <div class="grid">
-        <a href="">
-
-          <img src="../../uploads/post10.png" class="draftImg">
-            <img src="../../uploads/post3.jpg" class="draftImg">
-            <img src="../../uploads/post4.jpg" class="draftImg">
-        </a>
+      <a href="">
+        <img src="../../uploads/post10.png" class="draftImg">
+        <img src="../../uploads/post3.jpg" class="draftImg">
+        <img src="../../uploads/post4.jpg" class="draftImg">
+      </a>
     </div>
-</main>
-    <div class="bottom_space"></div>
-    <footer>
-      <%- include('../elements/seller_footer.ejs',{page:"orders"}) %>
-    </footer>
+  </main>
+  <div class="bottom_space"></div>
+  <footer>
+    <%- include('../elements/seller_footer.ejs',{page:"orders"}) %>
+  </footer>
 </body>
+
 </html>

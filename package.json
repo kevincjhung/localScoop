@@ -4,7 +4,7 @@
   "description": "localscoop - marketplace app for the 1st IDSP project of full-stack web development",
   "main": "app.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon server.js"
   },
@@ -33,9 +33,15 @@
     "dotenv": "^16.0.1",
     "ejs": "^3.1.7",
     "express": "^4.18.1",
+    "express-session": "^1.17.3",
+    "luxon": "^2.4.0",
+    "moment": "^2.29.3",
     "multer": "^1.4.4",
     "mysql": "^2.18.1",
     "mysql2": "^2.3.3",
+    "nodemailer": "^6.7.5",
+    "socket.io": "^4.5.1",
+    "stripe": "^9.4.0",
     "util": "^0.12.4"
   }
 }

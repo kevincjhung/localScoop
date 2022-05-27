@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -8,126 +9,137 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../../styles.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <%- include('../elements/seller_footer.ejs', {page:"page_landing"}) %>
 
-<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">-->
-    <style>
+        <!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">-->
+        <style>
+            main {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+            }
 
-        .productCard {
-            max-width: 75%;
-            max-height: 120px;
-            display: flex;
-            justify-content: center;
-            flex-direction: row;
-            align-self: start;
-            margin-left:20px;
-        }
-        p {
-            margin: 5px;
-            padding:0px;
-            font-size: small;
-        }
-        
-        h4 {
-            margin-left: 20px;
-            /*  */ 
-            
-            margin-block-start: 1.33em;
-            margin-block-end: 1.33em;
-            margin-inline-start: 0px;
-            margin-inline-end: 0px;
-            font-weight: bold;
-        }
+            p {
+                margin: 5px;
+                padding: 0px;
+                font-size: small;
+            }
 
-        h5{
-            margin-top: 0px;
-            margin-bottom: 5px;
-            margin-left: 10px;
-            font-weight: normal;
-            font-size: small;
-        }
-        h6 {
-            margin-top: 0px;
-            margin-bottom: 5px;
-            margin-left: 10px;
-            font-weight: normal;
-            font-size:x-small;
-        }
-    
-        .cardDiv {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
+            h4 {
+                margin-left: 20px;
+                margin-block-start: 1.33em;
+                margin-block-end: 1.33em;
+                margin-inline-start: 0px;
+                margin-inline-end: 0px;
+                font-weight: bold;
+            }
 
+            h5 {
+                margin-top: 0px;
+                margin-bottom: 5px;
+                margin-left: 10px;
+                font-weight: normal;
+                font-size: small;
+            }
 
-        .seller-orders2-body {
-            padding:15px 0 15px 0  ;
-        }
+            h6 {
+                margin-top: 0px;
+                margin-bottom: 5px;
+                margin-left: 10px;
+                font-weight: normal;
+                font-size: x-small;
+                color: #333;
+            }
 
+            .cardDiv {
+                display: flex;
+                flex-direction: column;
+                padding-top: 15px;
+                padding-bottom: 15;
+                padding-left: 30px;
+            }
 
+            .draftImg {
+                max-width: 120px;
+                max-height: 120px;
+            }
 
-        .draftImg {
-            max-width: 120px;
-            max-height: 120px;
-        }
+            img {
+                width: 120px;
+                max-height: 120px;
+            }
 
-        .imgDiv {
-            max-width: 120px;
-            max-height: 120px;
-        }
-
-    </style>
-    <title>orders_2</title>
+            .productClass {
+                display: flex;
+            }
+        </style>
+        <title>orders_2</title>
 </head>
 
 
 <body>
 
-<header class="fixed_header">
-    <!--Back button-->
-    <div class="nav-wrapper seller-shop seller-landing-header">
-        <div class="nav-wrapper--left seller-shop">
-            <span>Sold Products</span>
+    <header class="fixed_header">
+        <!--Back button-->
+        <div class="nav-wrapper seller-shop seller-landing-header">
+            <div class="nav-wrapper--left seller-shop">
+                <span>Sold Products</span>
+            </div>
+            <div class="nav-wrapper--right seller-shop">
+
+                <a href="/chat/store"><span class="material-icons nav-icon seller-shop">mode_comment</span></a>
+                <a href="#"><span class="material-icons nav-icon seller-shop">settings</span></a>
+            </div>
+
         </div>
-        <div class="nav-wrapper--right seller-shop">
+    </header>
+    <div class="top_space"></div>
 
-            <a href="#"><span class="material-icons nav-icon seller-shop">mode_comment</span></a>
-            <a href="#"><span class="material-icons nav-icon seller-shop">settings</span></a>
-        </div>
-
-    </div>
-</header>
-<div class="top_space"></div>
-
-<main class="seller-orders2-body">
-
-    <div class="cardDiv">
-        <% for( let index = 0; index < productListInfo.length; index++ ) { %>
-            <div class="productCard">
-                <div class="imageDiv">
-                    <!-- need to give picsum a different photo size so it gives you different photos -->
-                    <img src="https://picsum.photos/<%= 100 + parseInt(Math.random() * 10) %>" class="draftImg">
-                </div>
-                <div class="textdiv">
-                    <h6><%= productListInfo[index].itemName %> </h6>
-                    <h5><%= productListInfo[index].deliveryStatus %></h5>
-                    <h5><%= productListInfo[index].feedbackStatus %></h5>
-                    <h6><%= productListInfo[index].time %></h6>
+    <main>
+        <% for(let order of orderData) { %>
+            <div class="cardDiv">
+                <div class="productClass">
+                        <img src="<%= order.photo_file_path %>" alt="image of product">
+                    <div class="textdiv">
+                        <h6>
+                            <%= order.product_name %>
+                        </h6>
+                        <h5>
+                            <%= order.order_status %>
+                        </h5>
+                        <h6>
+                            <%= order.how_many_days_ago %>
+                        </h6>
+                    </div>
                 </div>
             </div>
         <% } %>
-    </div>
 
-    <div class="bottom_space"></div>
 
-    <footer>
-        <%- include('../elements/seller_footer.ejs',{page:"orders"}) %>
-    </footer>
-</main>
+                <!-- <div class="cardDiv">
+        <p> for( let index = 0; index < productListInfo.length; index++ ) </p>
+            <div class="productCard">
+                <div class="imageDiv">
+                    <img src="" class="draftImg">
+                </div>
+                <div class="textdiv">
+                    <h6>productListInfo[index].itemName  </h6>
+                    <h5>productListInfo[irsndex].deliveryStatus </h5>
+                    <h5>productListInfo[index].feedbackStatus </h5>
+                    <h6>productListInfo[index].time </h6>
+                </div>
+            </div>
+    </div> -->
+
+                <div class="bottom_space"></div>
+                <footer>
+                    <%- include('../elements/seller_footer.ejs',{page:"orders"}) %>
+                </footer>
+    </main>
 
 
 </body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
+
 </html>

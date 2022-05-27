@@ -1,9 +1,16 @@
+/**
+ * Deprecated, front end js for s3 upload moved to inline script tag in the ejs file.
+ * because it looks like every ejs file will need its own script file, as I 
+ * do not know how to pass the name of the ejs file to the js file.
+ */
+
 const imageForm = document.querySelector("#imageForm")
 const imageInput = document.querySelector("#imageInput")
 
 imageForm.addEventListener("submit", async event => {
 	event.preventDefault()
 
+	console.log('s3_frontend called from product post')
 	const file = imageInput.files[0]
 
 	/**
@@ -12,6 +19,7 @@ imageForm.addEventListener("submit", async event => {
 	 * 	2nd to send it to the backend
 	 */
 	let imageUrl;
+	
 	try {
 		// get secure url from our server
 		const { url } = await fetch("/s3Url").then(res => res.json())
@@ -50,5 +58,6 @@ imageForm.addEventListener("submit", async event => {
 	// append image on document
 	const img = document.createElement("img")
 	img.src = imageUrl
+	console.log(imageUrl)
 	document.body.appendChild(img)
 })

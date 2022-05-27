@@ -1,0 +1,139 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="/logo/localscooplogo2.png">
+<!--    <link rel="stylesheet" href="../../styles.css">-->
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"
+            integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk="
+            crossorigin="anonymous"
+    />
+
+<!--        <link rel="stylesheet" href="../../styles.css">-->
+    <link rel="stylesheet" href="/chat.css">
+
+
+    <style>
+
+
+
+
+    </style>
+    <script>
+        const ROOM_ID = '<%= roomId %>'
+
+
+    </script>
+
+    <title>Messages</title>
+    <style>
+        body{
+            background: white;
+
+        }
+    </style>
+
+</head>
+<body>
+<header class="fixed_header">
+    <div class="nav-wrapper buyer buyer-shop-header">
+        <div class="nav-wrapper--left buyer">
+            <a onclick="history.back()"><span class="material-icons nav-icon">arrow_back</span></a>
+        </div>
+        <div class="nav-wrapper--middle buyer">
+            Messages
+        </div>
+        <div class="nav-wrapper--right buyer">
+
+            <div>
+                <a href="/chat/buyer"><span class="material-icons white-text nav-icon buyer">mode_comment</span></a>
+            </div>
+            <div class="bag">
+
+            </div>
+
+        </div>
+    </div>
+
+
+</header>
+
+<div class="top_space"></div>
+
+
+<!-------CP Info  ------->
+
+<div class="cp-info" >
+    <div class="cp-img-container"><img src="<%=cp.image%>"></div>
+
+    <div class="cp-text-container" >
+        <div><h4><%=cp.name%></h4></div>
+
+        <%if (cp.id){ %>
+        <div>
+            <form action="/follow_business/follow_business_2/<%=cp.id%>"><button type="submit" > About store </button></form>
+        </div>
+        <%}else{%>
+            <div>
+                <p style="color:#777; margin:0;">Last Active Recently</p>
+            </div>
+        <%}%>
+
+    </div>
+</div>
+
+
+<!-------Chat Container ------->
+<div class="chat-container">
+
+        <div class="chat-messages ">
+
+            <% for (let message of chistory) {
+                let timestamp = message.timestamp
+                let date = new Date(timestamp);
+            %>
+            <div class="message">
+                <p class="meta"> <%=message.username%> <span><%= date.getHours()+ ":"+ date.getMinutes()%></span></p>
+
+                <p class="text">
+                    <%=message.text%>
+                </p>
+            </div>
+            <% } %>
+
+        </div>
+<!--    </main>-->
+    <div class="chat-form-container">
+        <form id="chat-form">
+            <input id="msg" type="text" placeholder="Enter Message" required autocomplete="off"/>
+            <button class="btn"></i> Send</button>
+        </form>
+    </div>
+
+
+</div>
+
+
+<!--FOOTER-->
+<%- include('../elements/buyer_footer', {page:"blah"}) %>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.9.4/qs.min.js" integrity="sha512-BHtomM5XDcUy7tDNcrcX1Eh0RogdWiMdXl3wJcKB3PFekXb3l5aDzymaTher61u6vEZySnoC/SAj2Y/p918Y3w==" crossorigin="anonymous"></script>
+<script src="/chat_front_end.js"></script>
+
+</script>
+
+
+</body>
+</html>

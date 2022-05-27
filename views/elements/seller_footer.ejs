@@ -30,8 +30,10 @@
         <i class=" material-icons nav-icon">add_circle</i>
         <span class="nav-text"> post</span>
     </a>
-    <a href="#" class="nav-link">
-        <i class=" material-icons nav-icon">leaderboard</i>
+
+    <a href="/analytics/analytics_1" class="nav-link <%= page === " analytics" ? "link-active" : "" %>">
+
+        <i class=" material-icons nav-icon" >leaderboard</i>
         <span class="nav-text"> analytics</span>
     </a>
 <!--    change this based on userrr whch is logged in -->
@@ -43,16 +45,8 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-<script>
-    let footerBtnList= document.querySelector(".nav").children
-    for (let navBtn of footerBtnList) {
-        navBtn.addEventListener("click", () => {
 
-            for (let navBtn of footerBtnList) navBtn.classList.remove("link-active")
-            navBtn.classList.add("link-active")
 
-        })
-    }
-</script>
-<!--</body>-->
-<!--</html>-->
+</body>
+</html>
+

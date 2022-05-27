@@ -72,18 +72,25 @@
 
 
     <script>
-        let id = "<%= id %>";
+        <% if (!sellerSession && !buyerSession) { %>
+        window.location.href = '/index2';
+        <% } %>
+
+        let sellerSession = "<%= sellerSession %>";
+        let buyerSession = "<%= buyerSession %>";
+
             setTimeout(function () {
                 document.body.classList.add('fade');
 
-                    window.location.href = '/index2';
+                    // window.location.href = '/index2';
 
-                // if (id.length < 1) {
-                //     window.location.href = '/index2';
-                // }else {
-                //
-                //     window.location.href = `/seller_landing/seller_landing`
-                // }
+                if (sellerSession.length < 1 && buyerSession < 1) {
+                    window.location.href = '/index2';
+                }else if(sellerSession.length > 1){
+                    window.location.href = `/seller_landing/seller_landing`
+                }else if(buyerSession.length > 1){
+                    window.location.href = `/follow_business/follow_business_1`
+                }
             }, 2000);
 
 

@@ -3,107 +3,267 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>add to card</title>
+<title>add to cart</title>
 <!-- Material.io/ CSS -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="/styles.css">
+
+<style>
+    /*<!--THE TOAST -->*/
+
+    #snackbar {
+        visibility: hidden;
+        min-width: 250px;
+        margin-left: -125px;
+        background-color: #D4E6B5;
+        color: #000;
+        text-align: center;
+        border-radius: 10px;
+        padding: 16px;
+        position: fixed;
+        z-index: 1;
+        left: 50%;
+        bottom: 40px;
+        font-size: 17px;
+    }
+
+    #snackbar.show {
+        visibility: visible;
+        -webkit-animation: fadein 0.5s, fadeout 0.5s 1.5s;
+        animation: fadein 0.5s, fadeout 0.5s 1.5s;
+    }
+
+    @keyframes fadein {
+        from {
+            bottom: 0;
+            opacity: 0;
+        }
+
+        to {
+            bottom: 40px;
+            opacity: 1;
+        }
+    }
+
+    @keyframes fadeout {
+        from {
+            bottom: 40px;
+            opacity: 1;
+        }
+
+        to {
+            bottom: 0;
+            opacity: 0;
+        }
+
+        /*to {bottom: 0; opacity: 0;}*/
+    }
+
+    /*<!--THE Responsiveness -->*/
+
+    .add-cart-body .grid {
+        display: block;
+        padding: 16px;
+        grid-gap: 16px;
+    }
+
+    @media screen and (min-width:768px) {
+        .add-cart-body .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+    }
 
 
-</head>
+    .disableBtn {
+        background-color: lightgray;
+        border: none
+    }
+</style>
+
 <body>
 
-<%
-
-//Here this woud be disapear since we get the numberOfProducts from router based on DB
-let fakeListFromDb = ["product1", "product2", "product3"]
-let numberOfProducts = fakeListFromDb.length
-%>
 
 
-<header class="fixed_header">
 
-    <div class="nav-wrapper buyer buyer-shop-header">
-        <div class="nav-wrapper--left buyer">
-            <a onclick="history.back()"><span class="material-icons nav-icon">arrow_back</span></a>
-        </div>
+    <header class="fixed_header">
 
-        <div class="nav-wrapper--middle buyer">
-            Product name
-        </div>
-
-        <div class="nav-wrapper--right buyer">
-            <div class="bag">
-                <a href="/shopping_cart/shopping_cart">
-                <%if(cardItemsTotal !== 0 ){%>
-                <div class="dot"> <%=cardItemsTotal%></div>
-                <%}%>
-                <span class="material-icons nav-icon seller-shop"> shopping_cart </span>
-                </a>
+        <div class="nav-wrapper buyer buyer-shop-header">
+            <div class="nav-wrapper--left buyer">
+                <a onclick="history.back()"><span class="material-icons nav-icon">arrow_back</span></a>
             </div>
-        </div>
 
-    </div>
-</header>
+            <div class="nav-wrapper--middle buyer">
+                Product Details
+            </div>
+
+            <div class="nav-wrapper--right buyer">
+
+                <div>
+                    <a href="/chat/buyer"><span class="material-icons white-text nav-icon buyer">mode_comment</span></a>
+                </div>
+                <div class="bag">
+                    <a href="/shopping_cart/shopping_cart">
+                        <% if(cartQuantity !==0 ){ %>
+                            <div class="dot">
+                                <%= cartQuantity %>
+                            </div>
+                        <% } %>
+                        <span class="material-icons nav-icon buyer nav-icon"> shopping_cart </span>
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+    </header>
 
 
     <div class="top_space"></div>
 
 
-<div class="add-cart-body ">
+    <div class="add-cart-body ">
+        <div class="grid">
 
-    <div class="container centerBox m-font">
-        <img  class="responsive-img product-l-image" src=<%=  productInfo.image_file_paths[0]%>>
+            <div class="container centerBox m-font grid1">
+                <img class="responsive-img product-l-image" src=<%=productInfo.image_file_paths[0]%>>
+            </div>
+
+
+            <!--Product Info-->
+
+
+            <div class=" grid2">
+
+                <div class="product_info">
+                    <h2>
+                        <%= productInfo.product_name %>
+                    </h2>
+                    <h4>
+                        <%= productInfo.product_description %>
+                    </h4>
+                    <h3>
+                        <%= storeInfo.store_address %>
+                    </h3>
+                    <h3>$
+                        <%= productInfo.product_price %> CAD
+                    </h3>
+
+                </div>
+
+
+                <div class="product_react_btn_set">
+                    <a href="/create/<%=productInfo.product_id%>"><button><span class="material-icons white-text">mode_comment</span></button></a>
+                    <button class="cc"><span class="material-icons">share</span></button>
+
+
+
+
+                    <% if(!wishlistItem.length){ %>
+                        <button id="addtowishlistBtn" onclick="addToWishlist()">
+                            <span class="material-icons"> star
+                            </span>
+                        </button>
+
+                        <% } else { %>
+                            <button style="background-color: lightgray; border:none">
+                                <span class="material-icons"> star
+                                </span>
+                            </button>
+                            <% } %>
+                </div>
+
+                <div class="add_cart_btn">
+                    <button class="addToCartBtn semibold l-font m-bn" onclick="toastFunction()">Add To Cart </button>
+                </div>
+                <div class="referrer"></div>
+
+
+            </div>
+
+        </div>
+
+
+
+        <div class="bottom_space"></div>
+
     </div>
+    <div id="snackbar">Added to cart</div>
+
+    <footer>
+        <%- include('../elements/buyer_footer', {page:""}) %>
+    </footer>
 
 
-    <!--Product Info-->
-    <div class="product_info">
-        <h2><%= productInfo.product_name%></h2>
-        <h4><%= productInfo.product_description%></h4>
-        <h3><%= storeInfo.store_address%></h3>
-        <h3>$<%=productInfo.product_price%> CAD</h3>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-    </div>
+    <script>
+        
+        document.querySelector(".addToCartBtn").addEventListener("click", () => {
+            axios.post('/add_cart/add_cart/<%= productInfo.product_id %>')
+                .then(response => {
+                    document.querySelector(".dot").innerHTML = response.data.quantity
+                    // console.log(cartItemsTotal, "the item has been added to the bag ")
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+            location.reload()
+        })
+
+        function toastFunction() {
+            // document.querySelector(".add-cart-body").style.opacity = 0.7;
+            let x = document.getElementById("snackbar")
+            x.classList.add("show");
+            setTimeout(
+                function () {
+                    x.className = x.className.replace("show", "");
+                }, 1700);
+        }
+        // document.querySelector(".referrer").innerHTML("<p><document.referrer</p>")
+  
 
 
 
-    <div class="product_react_btn_set">
-        <button><span class="material-icons white-text ">mode_comment</span></button>
-        <button><span class="material-icons ">share</span></button>
-        <button><span class="material-icons ">star</span></button>
+        //=====add to wishlist=====
 
-    </div>
+        // let wishlistbtn = document.getElementById("addtowishlistBtn")
+        // // console.log(wishlistbtn)
+        // wishlistbtn.addEventListener("click", () => {
 
-<div class="add_card_btn">
-    <button class="addToCartBtn semibold l-font m-bn">Add To Cart </button>
-</div>
+        //     // wishlistbtn.classList.toggle("disableBtn")
 
-    <div class="bottom_space"></div>
+        //     axios.post('/add_cart/add_to_wishlist/<%= productInfo.product_id %>')
+        //         .then(response => {
 
-</div>
-<footer>
-    <%- include('../elements/seller_footer',{page:"product_post"}) %>
-</footer>
+        //             console.log(response)
+        //         }).catch(error => {
+        //             console.log(error);
+        //         })
+        //     location.reload()
+        // })
 
 
+
+
+        function addToWishlist() {
+
+            axios.post('/add_cart/add_to_wishlist/<%= productInfo.product_id %>')
+                .then(response => {
+
+                    console.log(response)
+                }).catch(error => {
+                    console.log(error);
+                })
+            location.reload()
+        }
+
+
+
+
+
+    </script>
 
 </body>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-<script>
-
-    document.querySelector(".addToCartBtn").addEventListener("click", () => {
-
-        axios.post('/add_cart/add_cart')
-            .then(response => {
-                document.querySelector(".dot").innerHTML = response.data.quantity
-                // console.log(cartItemsTotal, "the item has been added to the bag ")
-
-            })
-            .catch(error => {
-                console.log(error);
-            })
-    })
-
-</script>
 </html>

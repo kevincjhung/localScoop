@@ -18,7 +18,7 @@ const s3Params = {
   secretAccessKey,
   signatureVersion: 'v4'
 }
-// console.log(s3Params)
+
 
 const s3 = new aws.S3(s3Params)
 

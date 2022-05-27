@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"> -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="../../styles.css">
+  <style>
+
+    body{
+      padding:0;
+      margin:0;
+      width:100%
+
+    }
+
+    .defaultImage {
+      width: 210px;
+      height: 210px;
+      object-fit: contain;
+    }
+
+
+  </style>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+          integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+  <title> buyer setup</title>
+</head>
+
+<body>
+
+
+  <!-- back button -->
+<!--  <div class="buyer-setup-header">-->
+<!--    <div class="back-btn"><a  onclick="history.back()"><span style="margin-left:50px" class="material-icons back-icon">arrow_back</span></a></div>-->
+<!--        <div class="header_title">Profile</div>-->
+<!--    <div></div>-->
+
+
+<!--  </div>-->
+  <header class="fixed_header">
+    <div class="nav-wrapper buyer buyer-shop-header">
+      <div class="nav-wrapper--left buyer">
+        <a onclick="history.back()"><span class="material-icons nav-icon">arrow_back</span></a>
+      </div>
+      <div class="nav-wrapper--middle buyer">
+        Products
+      </div>
+      <div class="nav-wrapper--right buyer">
+
+        <div>
+          <a href="/chat/buyer"><span class="material-icons white-text nav-icon buyer">mode_comment</span></a>
+        </div>
+        <div class="bag">
+          <a href="/shopping_cart/shopping_cart">
+            <% if(cartQuantity !==0 ){ %>
+              <div class="dot">
+                <%= cartQuantity %>
+              </div>
+            <% } %>
+            <span class="material-icons nav-icon buyer nav-icon"> shopping_cart </span>
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+  </header>
+
+  <div class="top_space"></div>
+
+
+
+  <div class="centerBox m-font signupIntro ">
+    <p class="description">
+    Setup My Profile<br>
+      So buyers know who you are!</p>
+      <img class="defaultImage"src="https://cdn-icons-png.flaticon.com/512/1255/1255134.png?w=740">
+      <button type="button" class="yellow-bn s-bn">Let's start</button>
+    <a href="/logout"><button type="button" class="logout-bn s-bn">Log Out</button></a>
+
+
+
+  </div>
+  <%- include('../elements/buyer_footer', {page:"profile"}) %>
+
+</body>
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+</html>
+
+
+
+<!-- <script>
+  function uploadphoto() {
+    let fileUpload = document.getElementById("file-upload").value
+    if (fileUpload) {
+      document.getElementById("photoForm").submit();
+    }
+  }
+</script> -->

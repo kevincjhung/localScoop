@@ -50,5 +50,7 @@ Git push heroku yourCurrentBranchName:master
 // push and deploy to main 
 git push heroku main:master
 
+// using .env with heroku
+https://www.youtube.com/watch?v=1G6e1cqqz3w
 
   

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" type="image/x-icon" href="/logo/localscooplogo2.png">
+	<link rel="stylesheet" href="../../styles.css">
+
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+
+	<style>
+
+		.buyer-grid-body .search-div{
+			width:100%;
+			display: flex;
+			align-items:center;
+			justify-content: center
+		}
+
+
+		.buyer-grid-body .search-bar{
+			width:400px;
+			background-color:#fff;
+			display: flex;
+			align-items:center;
+			border-radius:10px;
+			padding:0 10px;
+			height:50px;
+
+			margin-bottom: 0;
+		}
+
+		.buyer-grid-body .search-bar input {
+			background:transparent;
+			flex:1;
+			border:0;
+			outline:none;
+			font-size:14px;
+			margin: 0;
+
+		}
+
+
+		.buyer-grid-body .products-body{
+			text-align: center;
+		}
+
+		.buyer-grid-body .search-btn{
+			border:0;
+			background-color: white;
+		}
+
+
+		.search-btn span{
+			background-color: white;
+		}
+
+
+	</style>
+	<title>Document</title>
+</head>
+
+<body>
+<header class="fixed_header">
+	<div class="nav-wrapper buyer buyer-shop-header">
+		<div class="nav-wrapper--left buyer">
+			<a onclick="history.back()"><span class="material-icons nav-icon">arrow_back</span></a>
+		</div>
+		<div class="nav-wrapper--middle buyer">
+			Products
+		</div>
+		<div class="nav-wrapper--right buyer">
+
+			<div>
+				<a href="/chat/buyer"><span class="material-icons white-text nav-icon buyer">mode_comment</span></a>
+			</div>
+			<div class="bag">
+				<a href="/shopping_cart/shopping_cart">
+					<% if(cartQuantity !==0 ){ %>
+						<div class="dot">
+							<%= cartQuantity %>
+						</div>
+					<% } %>
+					<span class="material-icons nav-icon buyer nav-icon"> shopping_cart </span>
+				</a>
+			</div>
+
+		</div>
+	</div>
+
+
+</header>
+<main class="products-body buyer-grid-body">
+	<div class="top_space"></div>
+
+
+	<div class="search-div">
+		<form action="/add_cart/products" method="post" class="search-bar">
+			<button type="submit" class="search-btn">
+				<span class="material-icons"> search </span>
+			</button>
+			<input type="text" name="search" placeholder="Search the product">
+		</form>
+	</div>
+
+
+	<%if ( searchString !== null){%>
+	<div class="search-message"><p>Results for `<%=searchString%>` <p></div>
+	<%}%>
+
+	<div class="grid">
+
+		<% productInfo.forEach(product => { %>
+
+			<a href="/add_cart/add_cart/<%= product.product_id%>">
+				<div class="product-col cart">
+					<img src=<%=  product.image_file_paths[0]%> alt="product" style="width:100%">
+					<h4 ><%=product.product_name%></h4>
+					<p><%=product.product_price%></p>
+
+				</div>
+
+			</a>
+		<%})%>
+
+	</div>
+</main>
+
+
+<div class="bottom_space"></div>
+<footer><%- include('../elements/buyer_footer', {page:"shop"}) %></footer>
+
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+</html>

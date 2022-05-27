@@ -1,35 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Footer</title>
-    <!-- Material.io/ CSS -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="../../public/styles.css">
-</head>
-<body>
-
 
 <nav class="nav">
-    <a href="/" class="nav-link link-active ">
+    <a href="/follow_business/follow_business_1" class="nav-link  <%= page === "follow_business" ? "link-active" : "" %>  ">
         <i class=" material-icons nav-icon">home</i>
         <span class="nav-text"> Home</span>
     </a>
-    <a href="#" class="nav-link">
+    <a href="/add_cart/products" class="nav-link <%= page === "shop" ? "link-active" : "" %>">
         <i class=" material-icons nav-icon">shopping_bag</i>
         <span class="nav-text">shop</span>
     </a>
-    <a href="#" class="nav-link">
+
+
+    <a href="/map" class="nav-link <%= page === "map" ? "link-active" : "" %>">
+
+
         <i class=" material-icons nav-icon">place</i>
         <span class="nav-text"> explore</span>
     </a>
-    <a href="#" class="nav-link">
+    <a href="/wishlist/wishlist_1" class="nav-link <%= page === "wishlist" ? "link-active" : "" %>" >
+
         <i class=" material-icons nav-icon">star_outline</i>
         <span class="nav-text"> wishlist</span>
     </a>
-    <a href="#" class="nav-link">
+    <a href="/buyer_profile/profile_setup" class="nav-link  <%= page === "profile" ? "link-active" : "" %>">
         <i class=" material-icons nav-icon">manage_accounts</i>
         <span class="nav-text"> profile </span>
     </a>
@@ -41,12 +33,8 @@
     let footerBtnList= document.querySelector(".nav").children
     for (let navBtn of footerBtnList) {
         navBtn.addEventListener("click", () => {
-
             for (let navBtn of footerBtnList) navBtn.classList.remove("link-active")
-            navBtn.classList.add("link-active")
-
+            // navBtn.classList.add("link-active")
         })
     }
 </script>
-</body>
-</html>

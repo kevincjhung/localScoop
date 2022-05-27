@@ -82,12 +82,14 @@
     <div class="seller_grid">
 
         <% productInfo.forEach(product => { %>
+        <a href="/add_cart/add_cart/<%= product.product_id%>">
+
         <div class="seller_grid_item">
             <img alt="" class="seller_grid_image" src="<%=product.image_file_paths %>">
             <p><%=product.image_file_paths %></p>
         </div>
         <%  }); %>
-
+        </a>
     </div>
 
 
@@ -97,7 +99,7 @@
 
 
     <footer>
-        <%- include('../elements/buyer_footer',{page:"product_post"}) %>
+        <%- include('../elements/buyer_footer', {page:"follow_business"}) %>
     </footer>
 
 </main>

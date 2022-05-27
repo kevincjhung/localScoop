@@ -5,46 +5,67 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>product posting</title>
 
     <%- include('../elements/seller_footer.ejs', {page:"page_landing"}) %>
-    <link rel="stylesheet" href="../../styles.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
+        <link rel="stylesheet" href="../../styles.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <style>
+            .newProductImage.newProductImage {
+                height: 200px;
+                width: 250px;
+                border-radius: 15px;
+                object-fit: contain;
+            }
+            
+            .productList {
+                color: black;
+            }
+        </style>
 </head>
 
 <body>
     <div class="center">
         <div class="centerBox productSummary">
             <h2>Your Product is Live!</h2>
-            <p>Your “Nike Sage Low” product listing has been succesfully posted to your business page.</p>
-            <button type=" button" class="yellow-bn m-bn">Go to listing</button>
+            <p>Your <b>
+                    <%= productInfo.productName %>
+                </b> product listing has been succesfully posted to your business page.</p>
+            <a href="/orders/orders_1">
+                <button type=" button" class="yellow-bn m-bn">Go to listing</button>
+            </a>
         </div>
-        
+
+
         <div class="productList">New listing:</div>
+
+        <a href="/orders/orders_1" class="productList">
+            <div>New listing:</div>
+        </a>
 
         <div class="imgAndProductInfo">
             <% if(productInfo){ %>
-                <!-- <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" alt="" style="border-radius: 10px;"> -->
-                <img src="<%= productInfo.imgUrl %>" alt="" style="border-radius: 10px;">
+                <img src="<%= productInfo.imageFilePath %>" alt="" class="newProductImage">
                 <div class="productInfo">
-                    <div>Product Name : <%= productInfo.productName %>
+                    <div><b>Product Name:</b><br>
+                        <%= productInfo.productName %>
                     </div>
-                    <div>Description : <%= productInfo.description %>
+                    <div><b>Description:</b><br>
+                        <%= productInfo.description %>
                     </div>
-                    <div>Category : <%= productInfo.category %>
+                    <div><b>Category:</b> <br>
+                        <%= productInfo.category %>
                     </div>
-                    <div>Delivery Fee : $<%= productInfo.deliveryFee %>
+                    <div><b>Delivery Fee:</b><br> $
+                        <%= productInfo.deliveryFee %>
                     </div>
-                    <div>Product Price : $<%= productInfo.productPrice %>
+                    <div><b>Product Price:</b> $
+                        <%= productInfo.productPrice %>
                     </div>
                     <% } %>
                 </div>
-
         </div>
-
     </div>
-   
     <footer>
         <%- include('../elements/seller_footer',{page:"product_post"}) %>
     </footer>

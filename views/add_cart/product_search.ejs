@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" type="image/x-icon" href="/logo/localscooplogo2.png">
+	<style>
+
+		main * {
+			margin:5px;
+			padding:0;
+			box-sizing:content-box;
+			background-color: #F7F7F3;
+		}
+
+
+		.grid{
+			display:block;
+			padding:16px;
+			grid-gap:10px;
+		}
+
+
+		@media screen and (max-width:768px) {
+			.grid {
+				display:grid;
+				grid-template-columns: 1fr 1fr;
+			}
+
+		}
+
+
+
+		@media screen and (min-width:768px) {
+			.grid {
+				display:grid;
+				grid-template-columns:1fr 1fr 1fr 1fr ;
+			}
+		}
+
+
+
+
+		.cart{
+			margin-bottom: 16px;
+			padding:16px 30px 16px 16px ;
+			min-width: 15vh;
+			min-height: 15vh;
+
+			border-radius: 15px;
+			box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+			transition: 0.3s;
+			background-color: white;
+
+		}
+
+
+
+		.cart * {
+			background-color: white;
+
+		}
+
+		/* On mouse-over, add a deeper shadow */
+		.cart:hover {
+			box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+		}
+
+
+
+		/*}*/
+
+		img {
+			float: left;
+			max-width:100%;
+			height:150px;
+			object-fit: cover;
+			border-radius: 15px;
+		}
+
+
+		.container * {
+			background-color: white;
+		}
+
+
+ a {
+	 text-decoration: none;
+ }
+
+ .search-div{
+	 width:100%;
+	 display: flex;
+	 align-items:center;
+	 justify-content: center;
+ }
+
+
+ .search-bar{
+	 width:250px;
+	 background-color:white;
+	 display: flex;
+	 align-items:center;
+	 border-radius:20px;
+	 padding:5px 10px;
+ }
+
+ .search-bar input {
+	 background:transparent;
+	 flex:1;
+	 border:0;
+	 outline:none;
+	 padding:10px 10px;
+	 font-size:12px
+
+ }
+
+
+.products-body{
+	text-align: center;
+}
+
+.search-btn{
+	border:0;
+	background-color: white;
+}
+
+
+	</style>
+	<title>Document</title>
+</head>
+
+<body>
+<header class="fixed_header">
+	<div class="nav-wrapper buyer buyer-shop-header">
+		<div class="nav-wrapper--left buyer">
+			<a onclick="history.back()"><span class="material-icons nav-icon">arrow_back</span></a>
+		</div>
+		<div class="nav-wrapper--middle buyer">
+			Products
+		</div>
+		<div class="nav-wrapper--right buyer">
+
+			<div>
+				<a href="/chat/buyer"><span class="material-icons white-text nav-icon buyer">mode_comment</span></a>
+			</div>
+			<div class="bag">
+				<a href="/shopping_cart/shopping_cart">
+					<% if(cartQuantity !==0 ){ %>
+						<div class="dot">
+							<%= cartQuantity %>
+						</div>
+					<% } %>
+					<span class="material-icons nav-icon buyer nav-icon"> shopping_cart </span>
+				</a>
+			</div>
+
+		</div>
+	</div>
+
+
+</header>
+<main class="products-body">
+	<div class="top_space"></div>
+
+<div class="search-div">
+	<form action="#" class="search-bar">
+		<button type="submit" class="search-btn">
+			<span class="material-icons"> search </span>
+		</button>
+		<input type="text" name="search" placeholder="Serach the product">
+	</form>
+</div>
+
+	<div class="grid">
+
+		<% productInfo.forEach(product => { %>
+
+		<a href="/add_cart/add_cart/<%= product.product_id%>">
+		<div class="product-col cart">
+			<img src=<%=  product.image_file_paths[0]%> alt="product" style="width:100%">
+			<h4><%=product.product_name%></h4>
+			<p><%=product.product_price%></p>
+
+		</div>
+
+		</a>
+		<%})%>
+
+	</div>
+</main>
+
+
+<div class="bottom_space"></div>
+<footer><%- include('../elements/buyer_footer', {page:"shop"}) %></footer>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+</html>

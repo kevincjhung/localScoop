@@ -1,4 +1,5 @@
 // require
+const help = require("../help")
 const express = require('express');
 const multer = require('multer');
 const ejs = require('ejs');
@@ -22,19 +23,15 @@ app.use(express.json())
 /* Global Variables */
 
 // GET /seller_shop/seller_shop
- router.get("/seller_shop", async (req, res) => {
+ router.get("/seller_shop", help.sellerAuthorized,async (req, res) => {
 
   //WORK ON LOCALHOST
   //    let storeId = 1
-
-     let storeId = req.session.id
-     // console.log({storeId})
-     // let storeId = 1
+  let storeId = req.session.seller.seller_id
 
      let storeInfo = await mysqlDB.getStoreInfoByStoreId(storeId)
      let productInfo = await mysqlDB.getProductsAndImagesByStoreID(storeId)
      let storeImages = await mysqlDB.getShopPhotoByStoreId(storeId)
-
      res.render("seller_shop/seller_shop", { storeInfo:storeInfo[0], productInfo:productInfo, storeImages:storeImages })
 
  })

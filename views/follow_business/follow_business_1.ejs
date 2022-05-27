@@ -1,194 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" type="image/x-icon" href="/logo/localscooplogo2.png">
+	<link rel="stylesheet" href="/styles.css">
+
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<style>
-
-
-
-
-		main * {
-
-			margin:10px;
-			padding:0;
-			box-sizing:content-box;
-			background-color: #F7F7F3;
-
-
+		.categoryHeader {
+			margin-top: 15px;
 		}
-
-
-		.grid{
-			display:block;
-			padding:16px;
-			grid-gap:16px;
-
-		}
-
-
-		@media screen and (max-width:768px) {
-			.grid {
-				display:grid;
-				grid-template-columns: 1fr 1fr;
-			}
-
-		}
-
-
-
-		@media screen and (min-width:768px) {
-			.grid {
-				display:grid;
-				grid-template-columns:1fr 1fr 1fr 1fr ;
-			}
-		}
-
-
-
-
-		.card{
-			margin-bottom: 16px;
-			padding:16px 30px 16px 16px ;
-			min-width: 20vh;
-			min-height: 20vh;
-
-			border-radius: 15px;
-			box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-			transition: 0.3s;
-			background-color: white;
-
-		}
-
-
-
-		.card * {
-			background-color: white;
-
-		}
-
-		/* On mouse-over, add a deeper shadow */
-		.card:hover {
-			box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-		}
-
-
-
-		/*}*/
-
-		img {
-			float: left;
-			max-width:100%;
-			height:150px;
-			object-fit: cover;
-			border-radius: 15px;
-		}
-
-
-
-
-		.container * {
-			background-color: white;
-
-		}
-
-
-
-
-
-
 
 	</style>
-	<title>Document</title>
+	<title>Home</title>
 </head>
 
+
+<!--<style>-->
+<!--	.nav-wrapper&#45;&#45;right{-->
+<!--		display:flex;-->
+<!--	}-->
+<!--</style>-->
+
 <body>
-<header class="fixed_header">
-	<div class="nav-wrapper buyer buyer-shop-header">
-		<div class="nav-wrapper--left buyer">
-			<a onclick="history.back()"><span class="material-icons nav-icon">arrow_back</span></a>
+	<header class="fixed_header">
+		<div class="nav-wrapper buyer buyer-shop-header">
+			<div class="nav-wrapper--left buyer">
+				<a onclick="history.back()"><span class="material-icons nav-icon">arrow_back</span></a>
+			</div>
+			<div class="nav-wrapper--middle buyer">
+				Home
+			</div>
+
+			<div class="nav-wrapper--right buyer">
+
+				<div>
+					<a href="/chat/buyer"><span class="material-icons white-text nav-icon buyer">mode_comment</span></a>
+				</div>
+				<div class="bag">
+					<a href="/shopping_cart/shopping_cart">
+						<% if(cartQuantity !==0 ){ %>
+							<div class="dot">
+								<%= cartQuantity %>
+							</div>
+						<% } %>
+						<span class="material-icons nav-icon buyer nav-icon"> shopping_cart </span>
+					</a>
+				</div>
+
+			</div>
+
+
+			<!--			<a href="/chat/buyer"><span class="material-icons white-text ">mode_comment</span></a>-->
+
 		</div>
-		<div class="nav-wrapper--middle buyer">
-			Home
-		</div>
+	</header>
+
+
+	<main class="buyer-grid-body">
+		<div class="top_space"></div>
+		<div>
+			<h2 class="categoryHeader">Trending Items</h2>
 		</div>
 
-		<div class="nav-wrapper--right buyer">
-			<div class="bag">
-				<a href="/shopping_cart/shopping_cart">
-					<%if(cardItemsTotal !==0 ){%>
-					<div class="dot">
-						<%=cardItemsTotal%>
+		<div class="grid">
+
+			<% productInfo.forEach(product=> { %>
+				<a href="/add_cart/add_cart/<%= product.product_id%>">
+					<div class="product-col cart">
+						<img src=<%=product.image_file_paths[0]%> alt="product" style="width:100%">
+						<h4>
+							<%=product.product_name%>
+						</h4>
+						<p>
+							<%=product.product_price%>
+						</p>
 					</div>
-					<%}%>
-					<span class="material-icons nav-icon seller-shop"> shopping_cart </span>
 				</a>
-			</div>
+				<%})%>
 		</div>
-	</div>
-</header>
-<main>
-	<div class="top_space"></div>
-	<div><h2>Trending Items</h2></div>
-
-	<div class="grid">
-
-		<% productInfo.forEach(product => { %>
-		<div class="product-col card">
-			<img src=<%=  product.image_file_paths[0]%> alt="product" style="width:100%">
-			<h4><%=product.product_name%></h4>
-			<p><%=product.product_price%></p>
-
-			<div class="productId" style="display:none;">
-			  <%=product.product_id%>
-			</div>
+		<div>
+			<h2 class="categoryHeader">Trending Shops</h2>
 		</div>
-		<%})%>
+		<div class="grid">
 
-	</div>
+			<% storeInfo.forEach(store=> { %>
+				<a href="/follow_business/follow_business_2/<%= store.store_id%>">
+					<div class="store-col cart">
+						<img src=<%=store.image_file_paths[0]%> alt="store" style="width:100%">
+						<!--			//<h4>storeCategory</h4>-->
+						<h4>
+							<%=store.store_name%>
+						</h4>
+						<!--				make it dynamic later -->
+						<p>Vancouver, BC</p>
+					</div>
+				</a>
+				<%})%>
+		</div>
+	</main>
 
-<!--	<div><h2>Trending Shops</h2></div>-->
 
-<!--	<h1> css grid</h1>-->
-
-<!--	<div class="grid">-->
-
-<!--		-->
-<!--		-->
-<!--		<div class="store-col card">-->
-<!--			<img src="https://picsum.photos/200/300?random=1" alt="Avatar" style="width:100%">-->
-<!--			<h4>storeCategory</h4>-->
-<!--			<h4>storeName</h4>-->
-<!--			<p>Vancouver, BC</p>-->
-<!--		</div>-->
-
-<!--	</div>-->
-</main>
-
-<div class="bottom_space"></div>
-<footer><%- include('../elements/seller_footer', {page:"product_post"}) %></footer>
+	<div class="bottom_space"></div>
+	<footer>
+		<%- include('../elements/buyer_footer', {page:"follow_business"}) %>
+	</footer>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-<script>
-	let productCards= document.querySelectorAll(".product-col")
-	for(let productCard of productCards ){
-	productCard.addEventListener("click", () => {
-
-		// WE HAVE TO ADD THE PRODUCT ID
-		// let productId = document.querySelector(".productId").innerHTML
-		let productId = 2
-
-		console.log("the product id is", productId)
-		window.location.href = `/add_cart/add_cart/${productId}`;
-
-
-	})
-	}
-
-
-
-</script>
 </html>
+
+<!-- html: '<div style="border: 2px solid bisque; background-color: bisque; text-align: center;" ><h1>Thank you for supporting local business</h1><p>order confirmation</p></div>' -->

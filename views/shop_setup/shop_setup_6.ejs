@@ -7,7 +7,14 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"> -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="../../styles.css">
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+    img {
+      width: 250px;
+      height: 250px;
+      object-fit: contain;
+    }
+  </style>
   <title>shop set up - upload image</title>
 </head>
 
@@ -23,14 +30,15 @@
     <a onclick="history.back()"><span class="material-icons back-icon">arrow_back</span></a>
   </div>
 
+  <!-- <img src="https://idsp2-localscoop-frontend.s3.us-west-2.amazonaws.com/ba20731620062f0cfb877735f199bdbb" alt=""> -->
+  
+
   <div class="centerBox m-font imgUpload">
-    <P>
+    <P class="description">
       Add pictures of your store!<br>
       This gives customers an idea of what your store has to offer.
-    </P>
-
-
-
+    </P> 
+    <div class="insertImgHere"></div>
     <div class="container centerBox m-font">
       <!-- <form action="/shop_setup/uploadS3" method="POST" enctype="multipart/form-data" id="imageForm"> -->
       <form id="imageForm">
@@ -51,7 +59,77 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"
   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-<script src="/s3_photo_upload/s3_frontend.js"></script>
+<script>
+  const imageForm = document.querySelector("#imageForm")
+  const imageInput = document.querySelector("#imageInput")
+
+  imageForm.addEventListener("submit", async event => {
+    event.preventDefault()
+
+   
+    const file = imageInput.files[0]
+
+    /**
+     * make 2 requests, 
+     * 	1st to get the s3 url. 
+     * 	2nd to send it to the backend
+     */
+    let imageUrl;
+    
+    try {
+      // get secure url from our server
+      const { url } = await fetch("/s3Url").then(res => res.json())
+      
+      // post the image direclty to the s3 bucket
+      await fetch(url, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "multipart/form-data"
+        },
+        body: file
+      })
+
+      imageUrl = url.split('?')[0]
+      console.log(imageUrl)
+
+      // post requst to my server to store any extra data
+      const postParam = {
+        imageUrl
+      }
+
+
+      // if there is already a photo on the page, remove it
+      if( document.querySelector("#shopImage") !== null){
+        document.querySelector("#shopImage").remove()
+      }
+
+      // append image on document
+      const img = document.createElement("img")
+      let imageInsertionPoint = document.querySelector(".insertImgHere")
+      img.src = imageUrl;
+      img.id = "shopImage";
+     
+      imageInsertionPoint.appendChild(img)
+
+      // ajax request to routes
+      await fetch("/shop_setup/uploadS3", {
+        method: "POST",
+        body: JSON.stringify(postParam),
+        headers: {
+          "Content-Type": "application/json"
+        },
+      })
+
+    } catch (error) {
+      console.log("ERROR", error)
+    }
+
+
+  })
+</script>
+</html>
+
+
 
 <!-- <script>
   function uploadphoto() {
@@ -61,5 +139,3 @@
     }
   }
 </script> -->
-
-</html>

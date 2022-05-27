@@ -1,4 +1,5 @@
 // require
+const help = require("../help")
 const express = require('express');
 const multer = require('multer');
 const ejs = require('ejs');
@@ -18,14 +19,14 @@ const mysqlDB = require('../database/databaseAccessLayer')
 // })
 
 
-
-
+/**
+ * This redirects to the analytics page, 
+ */
 // GET /seller_landing/seller_landing
-router.get("/seller_landing", (req, res) => {
+router.get("/seller_landing",help.sellerAuthorized, (req, res) => {
     let newStoreId = req.session.storeId
     let email = req.session.email
     res.render("seller_landing/seller_landing",{newStoreId,email})
-
 })
 
 
