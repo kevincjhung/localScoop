@@ -13,7 +13,9 @@ router.get("/", (req, res) => {
 
 // AJAX-REQUEST: POST /map/get_store_info
 router.post('/get_store_info',help.buyerAuthorized, async (req, res) => {
+
 	let markerData = await mysqlDB.storesAndCategoryNames();
+	
 
 	let markerDataForFrontEnd = [];
 

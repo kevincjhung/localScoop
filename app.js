@@ -59,7 +59,6 @@ const sessionMiddleware = session({
 
 /*** express ***/
 const app = express();
-
 app.use(sessionMiddleware)
 app.use(express.urlencoded({extended: false}))
 app.use(cookieParser());

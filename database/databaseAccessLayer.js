@@ -849,7 +849,7 @@ exports.addBuyer = addBuyer
 async function chatExist(buyerId, storeId) {
     let query = `
    
-    SELECT * FROM localscoop.chat
+    SELECT * FROM chat
     WHERE chat.buyer_id = ? AND chat.store_id = ?;
    `
     let [theChat, fields] = await database.query(query, [buyerId, storeId])
@@ -882,7 +882,7 @@ exports.createChat = createChat
 
 async function getChat(buyerId, storeId) {
     let query = `
-    SELECT * FROM localscoop.chat
+    SELECT * FROM chat
     WHERE chat.buyer_id = ? AND chat.store_id = ?;
    `
     let [theChat, fields] = await database.query(query, [buyerId, storeId])
@@ -894,7 +894,6 @@ exports.getChat = getChat
 
 
 async function getBuyerChats(buyerId) {
-
     let query = `
     SELECT chat.* , storesandimages.store_name, storesandimages.image_file_paths
     FROM chat
@@ -980,7 +979,7 @@ exports.addBuyerChatContent = addBuyerChatContent
 async function getStoreIdFromProductId(productId) {
 
     let query = `
-    SELECT store_id FROM localscoop.product
+    SELECT store_id FROM product
      WHERE product_id = ?;`
 
     let [storeIdObject, fields] = await database.query(query, [productId])
