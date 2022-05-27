@@ -525,7 +525,7 @@ async function getCartIdByBuyerId(buyerId) {
         return buyerActiveCartId[0]['cart_id']
     } else {
         let addNewCartquery = `INSERT INTO cart(buyer_id) VALUE (?)`
-        const [buyerActiveCartId] = await database.query(addNewCartquery, [buyerId]) 
+        const [buyerActiveCartId] = await database.query(addNewCartquery, [buyerId])
         let cart_id = buyerActiveCartId.insertId
         return cart_id;
     }
@@ -585,6 +585,23 @@ async function getCartItemsCount(buyerId) {
 
 }
 exports.getCartItemsCount = getCartItemsCount
+// getCartItemsCount(3).then(console.log)
+
+
+
+async function getCartItemsLength(buyer_id) {
+    let cartItems = await getCartItemsByBuyer(buyer_id)
+    // console.log("bew",cartItems)
+    let cartQuantity = 0
+    cartItems.forEach(item => {
+        cartQuantity = cartQuantity + item.product_quantity
+
+    })
+    return cartQuantity
+}
+
+exports.getCartItemsLength = getCartItemsLength
+// getCartItemsLength(3).then(console.log)
 
 
 // getCartItemsCount(3).then(console.log)
@@ -619,20 +636,6 @@ exports.getCartItemsByBuyer = getCartItemsByBuyer
 
 
 
-async function getCartItemsLength(buyer_id) {
-    let cartItems = await getCartItemsByBuyer(buyer_id)
-    // console.log("bew",cartItems)
-    let cartQuantity = 0
-    cartItems.forEach(item => {
-        cartQuantity = cartQuantity + item.product_quantity
-
-    })
-    return cartQuantity
-}
-
-exports.getCartItemsLength = getCartItemsLength
-// getCartItemsLength(1).then(console.log)
-
 
 
 async function getCartItemByProduct(buyer_id, product_id) {
@@ -652,16 +655,21 @@ async function getCartItemByProduct(buyer_id, product_id) {
 exports.getCartItemByProduct = getCartItemByProduct
 // getCartItemByProduct(1,1).then(console.log)
 
-async function getCartItemsLength(buyer_Id) {
-    let cartItems = await getCartItemsByBuyer(buyer_Id)
-    let cartQuantity = 0
-    cartItems.forEach(item => {
-        cartQuantity = cartQuantity + item.product_quantity
-    })
-    return cartQuantity
-}
-exports.getCartItemsLength = getCartItemsLength
-// getCartItemsLength(1).then(console.log)
+
+
+
+// async function getCartItemsLength(buyer_Id) {
+//     let cartItems = await getCartItemsByBuyer(buyer_Id)
+//     let cartQuantity = 0
+//     cartItems.forEach(item => {
+//         cartQuantity = cartQuantity + item.product_quantity
+//     })
+//     return cartQuantity
+// }
+// exports.getCartItemsLength = getCartItemsLength
+// // getCartItemsLength(1).then(console.log)
+//
+
 
 
 async function inCartItem(cart_product_id, buyer_id, product_id) {
@@ -721,15 +729,14 @@ async function getWishlistIdbyBuyerId(buyer_id) {
 
     let queryOne = `Select wishlist_id from wishlist WHERE buyer_id = ?`
     let [getWishlistId] = await database.query(queryOne, [buyer_id])
-    let wishlist_id = getWishlistId[0].wishlist_id
 
-    if (!wishlist_id) {
+    if (getWishlistId[0]) {
+        return getWishlistId[0].wishlist_id
+    } else {
         let queryTwo = `INSERT INTO wishlist(buyer_id, quantity) VALUE(?, ?)`
         let [createWishlist] = await database.query(queryTwo, [buyer_id, 1])
         let newWishlist_id = createWishlist.insertId
         return newWishlist_id
-    } else {
-        return wishlist_id
     }
 }
 
@@ -821,7 +828,7 @@ exports.searchProduct = searchProduct
 
 //=============Buyer=============
 
-async function addBuyer(buyer_name, buyer_lastname="", buyer_phone_number, buyer_email, buyer_password) {
+async function addBuyer(buyer_name, buyer_lastname = "", buyer_phone_number, buyer_email, buyer_password) {
     let query = `
     INSERT INTO buyer (buyer_firstname, buyer_lastname, buyer_phone_number, buyer_email, buyer_password) 
     VALUES ( ?, ?, ?, ?, ?);`;
@@ -840,15 +847,15 @@ exports.addBuyer = addBuyer
 
 
 async function chatExist(buyerId, storeId) {
-    let query  = `
+    let query = `
    
     SELECT * FROM localscoop.chat
     WHERE chat.buyer_id = ? AND chat.store_id = ?;
    `
     let [theChat, fields] = await database.query(query, [buyerId, storeId])
-    console.log("chatExist: ",theChat.length === 1)
+    console.log("chatExist: ", theChat.length === 1)
     return theChat.length === 1
-    
+
 
 }
 exports.chatExist = chatExist
@@ -857,11 +864,11 @@ exports.chatExist = chatExist
 
 
 async function createChat(buyerId, storeId) {
-    let query  = `
+    let query = `
     INSERT INTO chat (chat_name, buyer_id, store_id)
     VALUES (?, ?, ?);`
 
-    await database.query(query, [buyerId.toString()+ storeId.toString(),buyerId, storeId])
+    await database.query(query, [buyerId.toString() + storeId.toString(), buyerId, storeId])
     console.log("chat has been created")
 
 }
@@ -874,7 +881,7 @@ exports.createChat = createChat
 
 
 async function getChat(buyerId, storeId) {
-    let query  = `
+    let query = `
     SELECT * FROM localscoop.chat
     WHERE chat.buyer_id = ? AND chat.store_id = ?;
    `
@@ -888,13 +895,13 @@ exports.getChat = getChat
 
 async function getBuyerChats(buyerId) {
 
-    let query=`
+    let query = `
     SELECT chat.* , storesandimages.store_name, storesandimages.image_file_paths
     FROM chat
     JOIN store ON chat.store_id = store.store_id
     JOIN storesandimages ON store.store_id=storesandimages.store_id
     WHERE chat.buyer_id = ?
-    ORDER BY chat.store_id DESC`
+    ORDER BY chat.last_timestamp DESC`
 
     let [buyerChat, fields] = await database.query(query, [buyerId])
     return buyerChat
@@ -905,12 +912,12 @@ exports.getBuyerChats = getBuyerChats
 
 
 async function getStoreChats(storeId) {
-    let query= `
+    let query = `
     SELECT chat.* , buyer.buyer_firstname, buyer.buyer_profile_photo
     FROM chat
     LEFT JOIN buyer ON chat.buyer_id = buyer.buyer_id
     WHERE chat.store_id = ?
-    ORDER BY chat.store_id DESC`
+    ORDER BY chat.last_timestamp DESC`
 
     let [storeChat, fields] = await database.query(query, [storeId])
     return storeChat
@@ -923,7 +930,7 @@ exports.getStoreChats = getStoreChats
 
 async function chatUsersName(groupId) {
 
-    let query =`select chat.chat_id , buyer.buyer_firstname AS "buyerName", store.store_name AS "storeName"
+    let query = `select chat.chat_id , buyer.buyer_firstname AS "buyerName", store.store_name AS "storeName"
     from chat
     left join buyer
     on chat.buyer_id = buyer.buyer_id
@@ -942,11 +949,11 @@ exports.chatUsersName = chatUsersName
 
 async function addStoreChatContent(chatId, msgObj) {
 
-    let query  = `
+    let query = `
     INSERT INTO store_messages (chat_id, text, timestamp)
     VALUES (?,?,?);`
 
-        await database.query(query, [chatId, msgObj.msg, msgObj.timestamp])
+    await database.query(query, [chatId, msgObj.msg, msgObj.timestamp])
 
 }
 
@@ -957,7 +964,7 @@ exports.addStoreChatContent = addStoreChatContent
 
 async function addBuyerChatContent(chatId, msgObj) {
 
-    let query  = `
+    let query = `
     INSERT INTO buyer_messages (chat_id, text, timestamp)
     VALUES (?,?,?);`
 
@@ -970,9 +977,9 @@ exports.addBuyerChatContent = addBuyerChatContent
 
 
 
-async function getStoreIdFromProductId (productId) {
+async function getStoreIdFromProductId(productId) {
 
-    let query  = `
+    let query = `
     SELECT store_id FROM localscoop.product
      WHERE product_id = ?;`
 
@@ -987,9 +994,9 @@ exports.getStoreIdFromProductId = getStoreIdFromProductId
 
 async function getChatContent(chatId) {
 
-    let query  =
-    
-             ` select buyer_messages.buyer_messages_id as id, buyer_messages.text, buyer_messages.timestamp,  buyer.buyer_firstname as username
+    let query =
+
+        ` select buyer_messages.buyer_messages_id as id, buyer_messages.text, buyer_messages.timestamp,  buyer.buyer_firstname as username
                 FROM buyer_messages 
                 JOIN chat on chat.chat_id = buyer_messages.chat_id
                 JOIN buyer ON buyer.buyer_id = chat.buyer_id
@@ -1001,7 +1008,7 @@ async function getChatContent(chatId) {
                 JOIN store ON store.store_id = chat.store_id
                 WHERE chat.chat_id = ?  
                 ORDER BY timestamp asc;`
-             
+
 
     let [AllChats, fields] = await database.query(query, [chatId, chatId])
     return AllChats
@@ -1021,7 +1028,7 @@ exports.getChatContent = getChatContent
 //showing chat  users names, ids and their photos 
 async function getChatUserinfo(chatId) {
 
-    let query  =
+    let query =
         ` select chat.chat_id as chat_id, chat.buyer_id, buyer.buyer_firstname AS "buyer_name" , buyer.buyer_profile_photo AS "buyer_image",  
             chat.store_id, storesandimages.store_name AS "store_name", storesandimages.image_file_paths AS "store_images"
             FROM chat 
@@ -1037,8 +1044,8 @@ exports.getChatUserinfo = getChatUserinfo
 
 
 
-async function getLastMessage(chatId ) {
-    let query  =
+async function getLastMessage(chatId) {
+    let query =
         `SELECT chat.*
          FROM chat
         WHERE chat.chat_id = ?;`
@@ -1052,14 +1059,14 @@ exports.getLastMessage = getLastMessage
 
 
 
-async function updateLastMessage(chatId, lastMessage, timestamp ) {
-    let query  = `
+async function updateLastMessage(chatId, lastMessage, timestamp) {
+    let query = `
         UPDATE chat
         SET last_message = ?, last_timestamp = ?
         WHERE chat.chat_id=?;`
 
     await database.query(query, [lastMessage, timestamp, chatId])
-    return await getLastMessage (chatId)
+    return await getLastMessage(chatId)
     // return lastMessage[0].chat_id
 
 }
@@ -1123,7 +1130,7 @@ exports.updateLastMessage = updateLastMessage
 
 /***   Maps  */
 
-async function storesAndCategoryNames(){
+async function storesAndCategoryNames() {
     let query = `
         SELECT store.store_id, 
         store.store_name, store.store_address, 
@@ -1133,7 +1140,7 @@ async function storesAndCategoryNames(){
         LEFT JOIN store_category ON store.store_id = store_category.store_id
         LEFT JOIN category ON store_category.category_id = category.category_id`
 
-    let result =  await database.query(query)
+    let result = await database.query(query)
     console.log(result[0] + '\n')
     return result[0]
 }

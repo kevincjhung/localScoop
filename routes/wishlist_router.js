@@ -45,6 +45,8 @@ router.post("/wishlist_removeItem", help.buyerAuthorized, async (req, res) => {
 
 
 
+// router.post('/wishlist/add_to_cart' + product_id){
 
+// }
 
 module.exports = router;

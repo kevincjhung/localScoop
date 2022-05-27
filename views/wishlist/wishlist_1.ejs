@@ -3,7 +3,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Wishlist</title>
-<!-- Material.io/ CSS -->
+
+<link rel="icon" type="image/x-icon" href="/logo/localscooplogo2.png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="/styles.css">
 
@@ -168,7 +169,7 @@
                 <div class="bag">
                     <a href="/shopping_cart/shopping_cart">
 
-                        <%if(cartQuantity !==0 ){%>
+                        <% if(cartQuantity !==0 && cartQuantity !==null ){ %>
                             <div class="dot">
                                 <%= cartQuantity %>
                             </div>
@@ -273,13 +274,13 @@
         function addToCartBtnFromWishlist(product_id) {
             axios.post('/add_cart/add_cart/' + product_id)
                 .then(response => {
-                    document.querySelector(".dot").innerHTML = response.data.quantity
+                    document.querySelector(".dot").innerHTML = response.data.cartQuantity
                     // console.log(cartItemsTotal, "the item has been added to the bag ")
                 })
                 .catch(error => {
                     console.log(error);
                 })
-
+       
         }
 
 
