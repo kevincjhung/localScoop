@@ -3,3 +3,6 @@ npm install nodemailer
 
 2.
 npm install --save luxon ?
+
+3.for payment
+npm install stripe

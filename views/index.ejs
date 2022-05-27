@@ -72,6 +72,10 @@
 
 
     <script>
+        <% if (!sellerSession && !buyerSession) { %>
+        window.location.href = '/index2';
+        <% } %>
+
         let sellerSession = "<%= sellerSession %>";
         let buyerSession = "<%= buyerSession %>";
 

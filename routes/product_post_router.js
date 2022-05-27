@@ -10,11 +10,15 @@ const mysqlDB = require("../database/databaseAccessLayer");
 
 // GET /product_post/product_post_1
 router.get("/product_post_1", help.sellerAuthorized, (req, res) => {
-  res.render("product_post/product_post_1")
+    res.render("product_post/product_post_1")
 })
 
 
 // is ajax route. when testing use valid store_id from db
+
+
+
+
 router.post("/product_post_1", help.sellerAuthorized, async (req, res) => {
   let productInfo = req.body
   let storeId = req.session.seller.seller_id;
@@ -30,30 +34,31 @@ router.post("/product_post_1", help.sellerAuthorized, async (req, res) => {
 
   // product photo and its link to the db
   req.session.newPostedProduct = await mysqlDB.addNewProductPhoto(productId, imageUrl)
-  
   res.redirect('/product_post/product_post_2')
 })
 
 
 // GET /product_post/product_post_2
-router.get("/product_post_2", help.sellerAuthorized,(req, res) => {
 
-  let theProduct = req.session.newPostedProduct[0];
-  
+router.get("/product_post_2", help.sellerAuthorized, (req, res) => {
 
-  // because we weren't consistent with naming
-  let productInfo = {
-    "productName": theProduct.product_name,
-    "description": theProduct.product_description,
-    "category": theProduct.product_category,
-    "deliveryFee": theProduct.product_delivery_fee,
-    "productPrice": theProduct.product_price,
-    'imageFilePath': theProduct.image_file_paths[0]
-  }
-  
-  res.render("product_post/product_post_2", {
-    productInfo
-  })
+    let theProduct = req.session.newPostedProduct[0];
+
+
+
+    // because we weren't consistent with naming
+    let productInfo = {
+        "productName": theProduct.product_name,
+        "description": theProduct.product_description,
+        "category": theProduct.product_category,
+        "deliveryFee": theProduct.product_delivery_fee,
+        "productPrice": theProduct.product_price,
+        'imageFilePath': theProduct.image_file_paths[0]
+    }
+
+    res.render("product_post/product_post_2", {
+        productInfo
+    })
 })
 
 

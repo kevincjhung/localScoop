@@ -2,6 +2,6 @@ function a(para){
     return para
 }
 
-console.log(a('aaa'))
 
-let leEdit = 'asdfhaklsjdfhlkajsdf';
+console.log('7:50pm')
+

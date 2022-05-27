@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wishlist</title>
+<!-- Material.io/ CSS -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="/styles.css">
+
+<style>
+    .buyer-grid-body .search-div {
+        position: relative;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        top: 90px;
+        height: 110px;
+        margin: 0;
+    }
+
+    .buyer-grid-body .search-bar {
+        width: 400px;
+        background-color: #fff;
+        display: flex;
+        align-items: center;
+        border-radius: 10px;
+        padding: 0 10px;
+        height: 50px;
+        margin-bottom: 0;
+        border: 1px solid rgb(228, 223, 223);
+    }
+
+    .buyer-grid-body .search-bar input {
+        background: transparent;
+        flex: 1;
+        border: 0;
+        outline: none;
+        font-size: 14px;
+        margin: 0;
+    }
+
+    .buyer-grid-body .products-body {
+        text-align: center;
+    }
+
+    .buyer-grid-body .search-btn {
+        border: 0;
+        background-color: white;
+    }
+
+    .search-btn span {
+        background-color: white;
+    }
+
+    .wishlistBox {
+        margin-top: 105px;
+    }
+
+    .wishlistSection {
+        position: relative;
+        display: grid;
+        grid-template-columns: 1fr 1fr 0.8fr;
+        background-color: white;
+        border-radius: 15px;
+        margin: 3%;
+        box-shadow: 2px 2px 2px rgb(143, 139, 139);
+        height: 130px;
+
+    }
+
+    .wishlistImg {
+        position: relative;
+        max-width: 100px;
+        height: 100px;
+        border: 1px solid gray;
+        border-radius: 50%;
+        place-self: center;
+        clip-path: circle();
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+
+    .wishlistRemove {
+        text-decoration: underline;
+        cursor: pointer;
+        color: #E3974F;
+        font-weight: 500;
+        font-size: 13px;
+    }
+
+    .addtocart {
+        color: #C3D99D;
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+    }
+
+
+    .itemUrl {
+        text-decoration: none;
+    }
+
+
+    .itemName {
+
+        font-weight: 600;
+        margin-top: 0;
+        color: rgb(43, 39, 39);
+        cursor: pointer;
+    }
+
+    .storeName {
+        color: rgb(148, 144, 144);
+        margin-bottom: 0;
+
+    }
+
+    .itemPrice {
+        position: absolute;
+        margin-bottom: 0;
+        bottom: 8px;
+
+
+    }
+
+    .removeGrid {
+        text-align: right;
+        position: absolute;
+        padding-right: 10px;
+        bottom: 0;
+        right: 0;
+    }
+
+
+
+
+    .imgDiv {
+        position: relative;
+        border: 1px solid gray;
+        border-radius: 50%;
+        width: 110px;
+        height: 110px;
+        margin: auto;
+        top: 10px;
+        cursor: pointer;
+    }
+</style>
+</head>
+
+<body class="wishlistBody">
+
+    <header class="fixed_header">
+
+        <div class="nav-wrapper buyer buyer-shop-header">
+            <div class="nav-wrapper--left buyer">
+                <a onclick="history.back()"><span class="material-icons nav-icon">arrow_back</span></a>
+            </div>
+
+            <div class="nav-wrapper--middle buyer">
+                whishlist
+            </div>
+
+            <div class="nav-wrapper--right buyer">
+                <div class="bag">
+                    <a href="/shopping_cart/shopping_cart">
+
+                        <%if(cartQuantity !==0 ){%>
+                            <div class="dot">
+                                <%= cartQuantity %>
+                            </div>
+                            <%}%>
+
+                                <span class="material-icons nav-icon seller-shop"> shopping_cart </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="favoritesBox middle">
+        <h2 class="favoritesText">YOUR FAVOURITES</h2>
+    </div>
+
+    <div class="products-body buyer-grid-body">
+
+        <div class="search-div">
+            <form action="/add_cart/products" method="post" class="search-bar">
+                <button type="submit" class="search-btn">
+                    <span class="material-icons"> search </span>
+                </button>
+                <input type="text" name="search" placeholder="Search the product">
+            </form>
+        </div>
+
+    </div>
+
+    <div class="wishlistBox">
+        <% if(allWishlist.length> 0){ %>
+            <% for(let wishlistItem of allWishlist){ %>
+                <section class="wishlistSection">
+
+                    <a href="/add_cart/add_cart/<%= wishlistItem.product_id%>">
+                        <div class="imgDiv"
+                            style="background-image: url('<%= wishlistItem.photo_file_path %>'); background-size: cover;">
+                        </div>
+                    </a>
+
+                    <div>
+
+                        <a href="/follow_business/follow_business_2/<%= wishlistItem.store_id%>" class="itemUrl">
+                            <p class="storeName">
+                                <%= wishlistItem.store_name %>
+                            </p>
+                        </a>
+
+                        <a href="/add_cart/add_cart/<%= wishlistItem.product_id%>" class="itemUrl">
+                            <p class="itemName">
+                                <%= wishlistItem.product_name %>
+                            </p>
+                        </a>
+
+                        <p class="itemPrice">$<%= wishlistItem.product_price %>
+                        </p>
+                    </div>
+                    <div class="removeGrid">
+
+                        <p class="wishlistRemove" onclick="wishlistRemove('<%= wishlistItem.wishlist_product_id %>')">
+                            REMOVE</p>
+                        <p class="addtocart" onclick="addToCartBtnFromWishlist('<%= wishlistItem.product_id %>')">
+                            ADD TO CART
+                        </p>
+                        <div>
+                </section>
+                <% } %>
+                    <% } else { %>
+                        <div class="emt">
+                            <img src="https://www.nykaa.com/assets/desktop/images/empty_wishlist.svg" alt="" class="emptyCart">
+                            <a href="/add_cart/products">
+                                <button type="button" class="yellow-bn s-bn">Continue shopping</button>
+                            </a>
+                        </div>
+                        <% } %>
+    </div>
+
+
+    <div class=" top_space "></div>
+
+
+    <footer>
+        <%- include('../elements/buyer_footer',{page:"wishlist"}) -%>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+
+        function wishlistRemove(wishlist_product_id) {
+            axios.post('/wishlist/wishlist_removeItem', {
+                wishlist_product_id: wishlist_product_id,
+            }).then(response => {
+                console.log(response.massage)
+            }).catch(error => {
+                console.log(error);
+            })
+            location.reload();
+        }
+
+
+        function addToCartBtnFromWishlist(product_id) {
+            axios.post('/add_cart/add_cart/' + product_id)
+                .then(response => {
+                    document.querySelector(".dot").innerHTML = response.data.quantity
+                    // console.log(cartItemsTotal, "the item has been added to the bag ")
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+           
+        }
+
+    
+
+    </script>
+
+</body>
+
+</html>
+
+</html>

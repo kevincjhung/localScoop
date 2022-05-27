@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>product posting</title>
 
     <%- include('../elements/seller_footer.ejs', {page:"page_landing"}) %>
         <link rel="stylesheet" href="../../styles.css">
@@ -17,6 +17,7 @@
                 border-radius: 15px;
                 object-fit: contain;
             }
+            
             .productList {
                 color: black;
             }
@@ -46,15 +47,20 @@
             <% if(productInfo){ %>
                 <img src="<%= productInfo.imageFilePath %>" alt="" class="newProductImage">
                 <div class="productInfo">
-                    <div><b>Product Name:</b><br> <%= productInfo.productName %>
+                    <div><b>Product Name:</b><br>
+                        <%= productInfo.productName %>
                     </div>
-                    <div><b>Description:</b><br> <%= productInfo.description %>
+                    <div><b>Description:</b><br>
+                        <%= productInfo.description %>
                     </div>
-                    <div><b>Category:</b> <br><%= productInfo.category %>
+                    <div><b>Category:</b> <br>
+                        <%= productInfo.category %>
                     </div>
-                    <div><b>Delivery Fee:</b><br> $<%= productInfo.deliveryFee %>
+                    <div><b>Delivery Fee:</b><br> $
+                        <%= productInfo.deliveryFee %>
                     </div>
-                    <div><b>Product Price:</b> $<%= productInfo.productPrice %>
+                    <div><b>Product Price:</b> $
+                        <%= productInfo.productPrice %>
                     </div>
                     <% } %>
                 </div>
@@ -66,5 +72,3 @@
 </body>
 
 </html>
-
-

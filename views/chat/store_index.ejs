@@ -4,56 +4,78 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
     <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"
             integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk="
             crossorigin="anonymous"
     />
-    
+
     <link rel="stylesheet" href="/chat.css">
 
-    <title>ChatCord App</title>
+    <title> Lobby </title>
+
+    <style>
+        body {
+            background-color: #F7F7F3;
+        }
+
+    </style>
 </head>
 <body>
-<div class="join-container">
-    <header class="join-header">
-        <h1><i class="fas fa-smile"></i> ChatCord</h1>
-    </header>
-    <main class="join-main">
-
-        <% buyerChatList.forEach(chat=>{
-          <a href="">  chat.chat_name</a>
-        })%>
 
 
 
+<header class="fixed_header">
+    <div class="nav-wrapper buyer buyer-shop-header">
+        <div class="nav-wrapper--left buyer">
+            <a href="/add_cart/products"><span class="material-icons nav-icon">arrow_back</span></a>
+        </div>
+        <div class="nav-wrapper--middle buyer">
+            Messages
+        </div>
+    </div>
 
-<!--        <form action="/chat/room">-->
-<!--            <div class="form-control">-->
-<!--                <label for="username">Username</label>-->
-<!--                <input-->
-<!--                        type="text"-->
-<!--                        name="username"-->
-<!--                        id="username"-->
-<!--                        placeholder="Enter username..."-->
-<!--                        required-->
-<!--                />-->
-<!--            </div>-->
-<!--            <div class="form-control">-->
-<!--                <label for="room">Room</label>-->
-<!--                <select name="room" id="room">-->
-<!--                    <option value="JavaScript">JavaScript</option>-->
-<!--                    <option value="Python">Python</option>-->
-<!--                    <option value="PHP">PHP</option>-->
-<!--                    <option value="C#">C#</option>-->
-<!--                    <option value="Ruby">Ruby</option>-->
-<!--                    <option value="Java">Java</option>-->
-<!--                </select>-->
-<!--            </div>-->
-<!--            <button type="submit" class="btn">Join Chat</button>-->
-<!--        </form>-->
-    </main>
+    <div class="nav-wrapper--right buyer">
+        <div class="bag">
+            hi?
+            <!--            <a href="/shopping_cart/shopping_cart">-->
+            <!--                <span class="material-icons nav-icon seller-shop"> shopping_cart </span>-->
+            <!--            </a>-->
+        </div>
+    </div>
+</header>
+<main>
+
+    <div class="top_space"></div>
+
+    <!----------Groups--------->
+    <div class="lobby-container">
+        <div class="lobby-users ">
+
+            <% storeChatList.forEach(chat=>{ %>
+            <div class="user">
+                <div class="img-container"> <img src=<%=chat.buyer_profile_photo%>>   </div>
+                <div class="messageInfo_container">
+                    <div>
+                        <p><a href="/chat/room/<%=chat.chat_id%>"><%=chat.buyer_firstname%></a></p>
+<!--                        <p>This will be the message </p>-->
+                    </div>
+                </div>
+                <div class="date_container"><p>Today</p></div>
+            </div>
+
+            <%  }); %>
+
+        </div>
+    </div>
+
+</main>
 </div>
+
+<%- include('../elements/buyer_footer', {page:"blah"}) %>
+
 </body>
 </html>

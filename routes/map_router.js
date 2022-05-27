@@ -10,6 +10,7 @@ router.get("/", (req, res) => {
 	res.render("map_router/map")
 })
 
+
 // AJAX-REQUEST: POST /map/get_store_info
 router.post('/get_store_info', async (req, res) => {
 	let markerData = await mysqlDB.storesAndCategoryNames();
@@ -30,7 +31,7 @@ router.post('/get_store_info', async (req, res) => {
 		
 		let pushObject = {
 			coordinates: coordinatesJSON,
-			content: theContent,
+			content: theContent
 		}
 
 		markerDataForFrontEnd.push(pushObject)

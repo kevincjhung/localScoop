@@ -4,6 +4,8 @@ const multer = require('multer');
 const ejs = require('ejs');
 const path = require('path');
 const crypto = require('crypto')
+const help = require('../help')
+
 
 //formating the message shown
 // const formatMessage = require('../views/chat/utils/messages')
@@ -15,16 +17,37 @@ const mysqlDB = require('../database/databaseAccessLayer')
 
 
 
-router.get("/store",  async (req, res) => {
 
-    //Change this later
-    // let storeId = req.session.seller.seller_id
+//chat/create
+router.get("/create/:id",  async (req, res) => {
 
-    let storeId = 2
-    let storeChatList = mysqlDB.getBuyerChats(storeId)
+    let buyerId = req.session.buyer.buyer_id
+    let storeId = await mysqlDB.getStoreIdFromProductId(req.params.id)
+
+    //check if chatroom already exist if not creates it
+    let chatExist= await mysqlDB.chatExist(buyerId, storeId)
+    if(!chatExist) mysqlDB.createChat(buyerId, storeId)
+
+    let chat = await mysqlDB.getChat(buyerId, storeId)
+    let chatId = chat.chat_id
+
+    res.redirect(`/chat/room/${chatId}`)
+
+})
 
 
-  res.render("chat/store_index",{storeChatList});
+
+
+router.get("/store", help.sellerAuthorized,  async (req, res) => {
+
+    let storeId = req.session.seller.seller_id
+
+    // Geting the chatrooms related to the store id
+    let storeChatList = await mysqlDB.getStoreChats(storeId)
+    console.log(storeChatList)
+
+
+    res.render("chat/store_index",{storeChatList:storeChatList});
 
 })
 
@@ -32,14 +55,17 @@ router.get("/store",  async (req, res) => {
 
 
 
-router.get("/buyer",  async (req, res) => {
+//chat/buyer
+// router.get("/buyer", help.buyerAuthorized,async (req, res) => {
+router.get("/buyer",async (req, res) => {
 
-    //Change this later
-    // let buyerId = req.session.buyer.buyer_id
+    let buyerId = req.session.buyer.buyer_id
 
-    let buyerId = 3
+
+    // Geting the chatrooms related to the store id
     let buyerChatList = await mysqlDB.getBuyerChats(buyerId)
-    console.log(buyerChatList)
+    console.log("buyerChatList", buyerChatList)
+
 
     res.render("chat/buyer_index", {buyerChatList:buyerChatList});
 })
@@ -49,23 +75,57 @@ router.get("/buyer",  async (req, res) => {
 
 
 
-router.get("/room/:id",  async (req, res) => {
-    let buyerId = 3
-    let roomId = req.params.id
 
-    console.log('render room')
+
+router.get("/room/:id",  async (req, res) => {
+    req.session.authenticated = true
+
+    let roomId = req.params.id
+    let chatUserInfo = await mysqlDB.getChatUserinfo(roomId)
+    let roomUsers = await mysqlDB.chatUsersName(roomId)
+
+    let cp={}
+    console.log("chatUserInfo",chatUserInfo)
+
+
+    // console.log("routerObject", roomUsers)
     
-    res.render("chat/buyer_room",{buyerId:buyerId, roomId:roomId});
+    if(req.session.seller) {
+        req.session.seller.name = roomUsers.storeName
+
+        cp.name = chatUserInfo[0].buyer_name
+        cp.image = chatUserInfo[0].buyer_image
+
+
+    }else {
+        req.session.buyer.name = roomUsers.buyerName
+
+        cp.id = chatUserInfo[0].store_id
+        cp.name = chatUserInfo[0].store_name
+        cp.image = chatUserInfo[0].store_images[0]
+
+    }
+
+
+
+
+    let chistory =  await mysqlDB.getChatContent(roomId)
+
+    // console.log('render room')
+    // console.log("roomId:",roomId)
+
+    console.log(cp.id, cp.name, cp.image)
+    
+    res.render("chat/room",{ roomId:roomId, chistory: chistory,cp});
+    // res.render("chat/room",{roomId:roomId, storeName:storeName, buyerName:buyerName});
 
 })
 
 
 
 
-// router.get("/room",  async (req, res) => {
-//     console.log('render room')
-//     res.render("chat/room");
-//
-// })
+
+
+
 
 module.exports = router;

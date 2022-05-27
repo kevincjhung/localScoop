@@ -7,15 +7,23 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" type="image/x-icon" href="/logo/localscooplogo2.png">
 	<link rel="stylesheet" href="/styles.css">
+
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<style>
 		.categoryHeader {
 			margin-top: 15px;
 		}
 
 	</style>
-
 	<title>Home</title>
 </head>
+
+
+<!--<style>-->
+<!--	.nav-wrapper&#45;&#45;right{-->
+<!--		display:flex;-->
+<!--	}-->
+<!--</style>-->
 
 <body>
 	<header class="fixed_header">
@@ -31,7 +39,6 @@
 		<div class="nav-wrapper--right buyer">
 			<div class="bag">
 				<a href="/shopping_cart/shopping_cart">
-
 					<% if(cartQuantity !==0 ){ %>
 						<div class="dot">
 							<%= cartQuantity %>
@@ -40,6 +47,9 @@
 						<span class="material-icons nav-icon seller-shop"> shopping_cart </span>
 				</a>
 			</div>
+
+<!--			<a href="/chat/buyer"><span class="material-icons white-text ">mode_comment</span></a>-->
+
 		</div>
 		</div>
 	</header>

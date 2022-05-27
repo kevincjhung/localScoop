@@ -16,7 +16,7 @@
             align-items: center;
         }
     </style>
-    <title>Shop Setup</title>
+    <title>Buyer SignUp </title>
 </head>
 <body>
 
@@ -28,25 +28,24 @@
 
 
 <div class="form-box center">
-    <form class="p-3"  action="/shop_setup/shop_setup_2" method="POST">
-        <h5>Enter contact Info</h5>
+    <form class="p-3"  action="/buyer_setup/buyer_signup_2" method="POST">
         <div class=" m-4 ">
-            <label for="storeName">Store Name</label>
-            <input type="text" class="form-control" id="inputStoreName" name="storeName" required>
+            <label for="firstName">Buyer Name</label>
+            <input type="text" class="form-control" id="inputFirstName" name="buyerName">
         </div>
         <div class=" m-4">
             <label for="phoneNum">Phone Number</label>
-            <input type="tel" class="form-control" id="inputPhoneNumber" name="phoneNum" required>
+            <input type="tel" class="form-control" id="inputPhoneNumber" name="phoneNum">
         </div>
         <div class=" m-4">
             <label for="email">Email Address</label>
-            <input type="email" class="form-control" id="inputEmail" name="email" required>
+            <input type="email" class="form-control" id="inputEmail" name="email">
         </div>
         <br>
         <h5>Create Password</h5>
         <div class=" m-4">
             <label for="password">Password</label>
-            <input type="password" class="form-control" id="inputPassword" name="password" required>
+            <input type="password" class="form-control" id="inputPassword" name="password">
         </div>
         <button type="submit" class="yellow-bn m-3" >Create Account</button>
     </form>

@@ -3,71 +3,68 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>shopping cart</title>
+<title>checkout</title>
 <!-- Material.io/ CSS -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="../../styles.css">
 
 <style>
+    body {
+        overflow: scroll;
+    }
+    
     .submitOder {
         display: grid;
         margin: 7%;
     }
-
+    
     .submitOder input[type='text'],
+    .submitOder input[type='email'],
+    #card-element,
     select {
         border-radius: 10px;
         height: 40px;
         border: 1px solid rgb(153, 148, 148);
         width: 80%;
+        background-color: white;
     }
-
-
+    
     .checkoutIpt {
         display: grid;
         margin: 2%;
     }
-
-
+    
     #PostalCode {
         width: 40%;
     }
-
+    
     #province,
     #city {
         width: 70%;
     }
-
+    
     .provinceCity {
         display: flex;
-
     }
-
-
-
+    
     .submitOder input[type='radio'] {
         width: 20px;
         height: 20px;
-
     }
-
+    
     #deliveryOption {
         display: flex;
         justify-content: space-around;
         margin: 4%;
-
     }
-
+    
     #submitBtn {
-
         text-align: center;
         justify-content: center;
-
     }
-
-
+    
     .paymentTotal {
-        max-width:85% ;
+        max-width: 85%;
         border-radius: 20px;
         background-color: rgb(255, 239, 214);
         margin-top: 5%;
@@ -85,48 +82,61 @@
             <div class="nav-wrapper--left buyer">
                 <a onclick="history.back()"><span class="material-icons nav-icon">arrow_back</span></a>
             </div>
-    
+
             <div class="nav-wrapper--middle buyer">
                 Shopping Cart
             </div>
-    
+
             <div class="nav-wrapper--right buyer">
                 <div class="bag">
                     <a href="/shopping_cart/shopping_cart">
-    
-                        <%if(cartQuantity !== 0 ){%>
-                        <div class="dot"> <%= cartQuantity %></div>
-                        <%}%>
-    
-                        <span class="material-icons nav-icon seller-shop"> shopping_cart </span>
+
+                        <% if(cartQuantity !==0){ %>
+                            <div class="dot">
+                                <%= cartQuantity %>
+                            </div>
+                            <% } %>
+
+                                <span class="material-icons nav-icon seller-shop"> shopping_cart </span>
                     </a>
                 </div>
             </div>
-    
+
         </div>
     </header>
 
     <div class="top_space"></div>
 
-    <form action="/checkout/checkout_confirmation" class="submitOder" method="POST">
+    <form action="/checkout/checkout_confirmation" class="submitOder" method="POST" id="submitForm">
         <div class="checkoutIpt">
             <label for="deliveryAddress">Delivery Address:</label>
-            <input type="text" name="deliveryAddress" id="deliveryAddress">
+            <input type="text" name="deliveryAddress" id="deliveryAddress" required>
         </div>
         <div class="checkoutIpt">
             <label for="postalCode">Postal Code:</label>
-            <input type="text" name="postalCode" id="postalCode">
+            <input type="text" name="postalCode" id="postalCode" required>
         </div>
 
         <div class="provinceCity">
             <div class="checkoutIpt">
                 <label for="province">Province:</label>
-                <input type="text" name="province" id="province">
+                <input type="text" name="province" id="province" required>
             </div>
             <div class="checkoutIpt">
                 <label for="city">City:</label>
-                <input type="text" name="city" id="city">
+                <input type="text" name="city" id="city" required>
             </div>
+        </div>
+
+        <div class="checkoutIpt">
+            <label for="name">Name on Card:</label>
+            <input type="text" name="name" id="name" required>
+        </div>
+
+
+        <div class="checkoutIpt">
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" required>
         </div>
 
 
@@ -140,8 +150,8 @@
         </div>
 
         <div class="checkoutIpt">
-            <label for="cartNumber">Card Number:</label>
-            <input type="text" name="cartNumber" id="cartNumber">
+            <div id="card-element" class="bg-transparent text-white p-2 h-10 mb-4"></div>
+            <div id="card-errors" role="alert"></div>
         </div>
 
         <h4>Choose a Shipping Method:</h4>
@@ -159,18 +169,28 @@
             </div>
         </div>
         <div class="paymentTotal">
-            <p>Subtotal(<%= cartQuantity %> item(s)): $<span id="itemsSubtotal"><%= subtotal %></span></p>
-            <p>Shipping: $<span id="shippingFee">10</span></p>
-            <p>Tax: $<span id="taxFee"><%= subtotal * 0.12 %></span></p>
-            <h4>Order Total: CAD $<span id="orderToal"></span></h4>
+            <p>Subtotal(
+                <%= cartQuantity %> item(s)): $<span id="itemsSubtotal">
+                        <%= subtotal.toFixed(2) %>
+                    </span></p>
+            <% if(cartQuantity>0) { %>
+                <p>Shipping: $ <span id="shippingFee">10.00</span></p>
+                <% }else{ %>
+                    <p>Shipping: $ <span id="shippingFee">0.00</span></p>
+                    <% } %>
+                        <p>Tax: $<span id="taxFee">
+                                <% let su=(subtotal * 0.12).toFixed(2) %>
+                                    <%= su %>
+                            </span></p>
+                        <h4>Order Total: CAD $<span id="orderTotal"></span></h4>
         </div>
         <div class="center">
-            <button type="submit" class="yellow-bn s-bn"> Submit Order</button>
+            <button type="submit" class="yellow-bn s-bn" id="submitbtn"> Submit Order</button>
         </div>
+
     </form>
 
     <div class="extraspace2"></div>
-
 
     <footer>
         <%- include('../elements/buyer_footer',{page:"product_post"}) -%>
@@ -178,36 +198,59 @@
 </body>
 <!-- <script src="../../help.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://js.stripe.com/v3/"></script>
+<script src="../../checkout_payment.js"></script>
 
 <script>
-
-    let shippingFee = 10
+    let shippingFee = 0
     let expressDelivery = document.getElementById("expressDelivery")
     let standardDelivery = document.getElementById("standardDelivery")
 
     let itemsSubtotal = `<%= subtotal %>`
     let taxFee = `<%= subtotal * 0.12 %>`
-    let orderToal
+    let orderTotal = 0
 
     expressDelivery.addEventListener("click", () => {
         shippingFee = expressDelivery.value
         document.getElementById('shippingFee').innerHTML = shippingFee;
-        orderToal = parseInt(shippingFee) + parseInt(itemsSubtotal) + parseInt(taxFee)
-        document.getElementById("orderToal").innerText = orderToal
+        orderTotal = parseInt(shippingFee) + parseInt(itemsSubtotal) + parseInt(taxFee)
+        document.getElementById("orderTotal").innerText = orderTotal.toFixed(2)
     })
 
     standardDelivery.addEventListener("click", () => {
         shippingFee = standardDelivery.value
         document.getElementById('shippingFee').innerHTML = shippingFee;
-        orderToal = parseInt(shippingFee) + parseInt(itemsSubtotal) + parseInt(taxFee)
-        document.getElementById("orderToal").innerText = orderToal
+        orderTotal = parseInt(shippingFee) + parseInt(itemsSubtotal) + parseInt(taxFee)
+        document.getElementById("orderTotal").innerText = orderTotal.toFixed(2)
     })
 
-    orderToal = parseInt(shippingFee) + parseInt(itemsSubtotal) + parseInt(taxFee)
-    document.getElementById("orderToal").innerText = orderToal
+    orderTotal = parseInt(shippingFee) + parseInt(itemsSubtotal) + parseInt(taxFee)
+    document.getElementById("orderTotal").innerText = orderTotal.toFixed(2)
 
 
+    if (orderTotal > 0) {
+        const submitform = document.getElementById('submitForm');
+        const hiddenAmount = document.createElement('input');
+        hiddenAmount.setAttribute('type', 'hidden');
+        hiddenAmount.setAttribute('name', 'totalAmount');
+        hiddenAmount.setAttribute('value', parseInt(orderTotal));
+        console.log("hiddenamount", hiddenAmount)
+        submitform.appendChild(hiddenAmount);
+    }
 
+
+    // let submitbtn = document.getElementById("submitbtn")
+
+    // submitbtn.addEventListener("click", () => {
+    //     axios.post('', {  })
+    //         .then(response => {
+    //             console.log(response)
+    //         })
+    //         .catch(error => {
+    //             console.log(error);
+    //         })
+
+    // })
 </script>
 
 
