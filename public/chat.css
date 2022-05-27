@@ -394,6 +394,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    color: #777
 }
 
 
@@ -413,3 +414,62 @@
 }
 
 
+.nav-icon.buyer {
+    font-size: 30px;
+    margin: 0 10px;
+    color: #383b3c;
+    text-decoration: none;
+
+}
+
+
+.comingSoon {
+    position: absolute;
+    /* taken out of the normal flow of the document */
+    top: 50%;
+    /* moved down by 50% of the screen height */
+    transform: translateY(-50%);
+    /* moved back up (Y axis) by half of its height to achieve the perfect center */
+    width: 100%;
+    /* needs to be defined to keep the default block behavior */
+    text-align: center;
+    margin: 0;
+    /* again, for perfect center */
+    opacity: 80%;
+}
+
+
+
+.storeName{
+    text-transform: capitalize;
+    font-weight:500;
+    font-size: 19px;
+    margin: 3px 0;
+
+}
+
+
+
+.a,
+.a:hover,
+.a:focus,
+.a:active {
+    text-decoration: none;
+    color:black
+}
+
+
+
+.dot {
+    position: absolute;
+    top: 7px;
+    right: 15px;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    display: inline-block;
+    z-index: 2;
+    font-size: 15px;
+    background-color: #EEC195;
+    text-align: center;
+}

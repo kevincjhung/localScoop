@@ -46,6 +46,7 @@ const buyerProfileRouter = require("./routes/buyer_profile_router")
 const mapsRouter = require("./routes/map_router")
 
 
+
 // const sellerHomeRouter = require("./routes/seller_home_router")
 
 // Session Middleware
@@ -139,8 +140,7 @@ app.use("/buyer_profile", buyerProfileRouter)
 
 
 app.get("/", (req, res) => {
-    req.session.apples = 3
-    console.log(req.session.apples)
+
     if (!req.session) {
         res.render("index")
     }
@@ -166,7 +166,7 @@ app.get("/index2", (req, res) => {
 })
 
 // dcs = delete cookie session. unnecessary, but for ease of deleting cookies during dev
-app.get("/dcs", (req, res) => {
+app.get("/logout", (req, res) => {
     req.session.destroy()
     res.redirect("/");
 })

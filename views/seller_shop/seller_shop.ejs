@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <%- include('../elements/seller_footer.ejs', {page:"page_landing"}) %>
+  <link rel="icon" type="image/x-icon" href="/logo/localscooplogo2.png">
   <link rel="stylesheet" href="../../styles.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
@@ -23,7 +23,7 @@
     </div>
     <div class="nav-wrapper--right seller-shop">
 
-      <a href="#"><span class="material-icons nav-icon seller-shop">mode_comment</span></a>
+      <a href="/chat/store"><span class="material-icons nav-icon seller-shop">mode_comment</span></a>
       <a href="#"><span class="material-icons nav-icon seller-shop">share</span></a>
       <a href="#"><span class="material-icons nav-icon seller-shop">settings</span></a>
     </div>
@@ -65,8 +65,10 @@
     <p> <%= storeInfo.description%> </p>
     <h4><%= storeInfo.followers %> Followers</h4>
     <div class=" btn-container center">
-      <button class="yellow-bn xs-bn" style="width:40%" >Edit Shop </button>
-      <button class="yellow-bn xs-bn"  style="width:40%">Share Shop </button>
+      <button class="yellow-bn xs-bn" style="width:30%" >Edit Shop </button>
+      <button class="yellow-bn xs-bn"  style="width:30%">Share Shop </button>
+     <a href="/logout"> <button class="logout-bn center xs-bn " style="width:100%" >Log Out </button></a>
+
     </div>
     <hr>
 

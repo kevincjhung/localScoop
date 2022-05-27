@@ -34,23 +34,28 @@
 			<div class="nav-wrapper--middle buyer">
 				Home
 			</div>
-		</div>
-		
-		<div class="nav-wrapper--right buyer">
-			<div class="bag">
-				<a href="/shopping_cart/shopping_cart">
-					<% if(cartQuantity !==0 ){ %>
-						<div class="dot">
-							<%= cartQuantity %>
-						</div>
+
+			<div class="nav-wrapper--right buyer">
+
+				<div>
+					<a href="/chat/buyer"><span class="material-icons white-text nav-icon buyer">mode_comment</span></a>
+				</div>
+				<div class="bag">
+					<a href="/shopping_cart/shopping_cart">
+						<% if(cartQuantity !==0 && cartQuantity !==null ){ %>
+							<div class="dot">
+								<%= cartQuantity %>
+							</div>
 						<% } %>
-						<span class="material-icons nav-icon seller-shop"> shopping_cart </span>
-				</a>
+						<span class="material-icons nav-icon buyer nav-icon"> shopping_cart </span>
+					</a>
+				</div>
+
 			</div>
 
-<!--			<a href="/chat/buyer"><span class="material-icons white-text ">mode_comment</span></a>-->
 
-		</div>
+			<!--			<a href="/chat/buyer"><span class="material-icons white-text ">mode_comment</span></a>-->
+
 		</div>
 	</header>
 

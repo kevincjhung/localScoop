@@ -25,13 +25,16 @@ let DateTime = luxon.DateTime;
 
 router.get("/orders_1", help.sellerAuthorized, async(req, res) => {
     let storeId = req.session;
-    // if user not logged in, redirect to login page
-    // if(storeId == undefined){
-    //     res.redirect("/")
-    // }
-    let seller_id = req.session.seller.seller_id
+    
+    //if user not logged in, redirect to login page
+    if(storeId == undefined){
+        res.redirect("/")
+    }
 
-    let carouselSliderData = await mysqlDB.getOrdersWithProductsPhotosByStoreId(seller_id)
+    let seller_id = req.session.seller.seller_id
+    
+    let carouselSliderData = await mysqlDB.getProductsAndImagesByStoreID(2)
+
     console.log(carouselSliderData)
     // loop through all orders, take timestamp, calculate how long ago it was, write to {}
     for(let order of carouselSliderData){
@@ -50,20 +53,8 @@ router.get("/orders_1", help.sellerAuthorized, async(req, res) => {
 
 router.get("/orders_2", help.sellerAuthorized, async (req, res) => {
     let seller_id = req.session.seller.seller_id
-    let productListInfo = [
-        { itemName: "Ultra Boost 912", deliveryStatus: "Pending Delivery", feedbackStatus: "", time: "Today" },
-        { itemName: "Nike AirMax", deliveryStatus: "Delivered", feedbackStatus: "You have new feedback", time: "2 Days Ago" },
-        { itemName: "Nike AirForce", deliveryStatus: "Delivered", feedbackStatus: "You have new feedback", time: "3 Days Ago" },
-        { itemName: "Nike Blazer", deliveryStatus: "Delivery Pending", feedbackStatus: "", time: "4 Days Ago" },
-        { itemName: "Mens Leather Boots", deliveryStatus: "Delivered", feedbackStatus: "", time: "1 Week Ago" },
-        { itemName: "Ultra Boost 912", deliveryStatus: "Pending Delivery", feedbackStatus: "", time: "1 Week Ago" },
-        { itemName: "Nike AirMax", deliveryStatus: "Delivered", feedbackStatus: "You have new feedback", time: "1 Week Ago" },
-        { itemName: "Nike AirForce", deliveryStatus: "Delivered", feedbackStatus: "You have new feedback", time: "1 Week Ago" },
-        { itemName: "Nike Blazer", deliveryStatus: "Delivery Pending", feedbackStatus: "", time: "2 Weeks Ago" },
-        { itemName: "Mens Leather Boots", deliveryStatus: "Delivered", feedbackStatus: "", time: "2 Weeks Ago" }, 
-    ]
-    
-    let orderData = await mysqlDB.getOrdersWithProductsPhotosByStoreId(seller_id);
+    let orderData = await mysqlDB.getOrdersWithProductsPhotosByStoreId_NoOrderProductTable(seller_id)
+
 
     // loop through all orders, take timestamp, calculate how long ago it was, write to {}
     for(let order of orderData){

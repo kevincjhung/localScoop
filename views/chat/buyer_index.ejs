@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="icon" type="image/x-icon" href="/logo/localscooplogo2.png">
+
 
     <link
             rel="stylesheet"
@@ -28,23 +30,34 @@
 
 
 
-    <header class="fixed_header">
-        <div class="nav-wrapper buyer buyer-shop-header">
-            <div class="nav-wrapper--left buyer">
-                <a href="/add_cart/products"><span class="material-icons nav-icon">arrow_back</span></a>
-            </div>
-            <div class="nav-wrapper--middle buyer">
-                Messages
-            </div>
+<header class="fixed_header">
+    <div class="nav-wrapper buyer buyer-shop-header">
+        <div class="nav-wrapper--left buyer">
+            <a onclick="history.back()"><span class="material-icons nav-icon">arrow_back</span></a>
         </div>
-
+        <div class="nav-wrapper--middle buyer">
+            Inbox
+        </div>
         <div class="nav-wrapper--right buyer">
-                hi?
-                <!--            <a href="/shopping_cart/shopping_cart">-->
-                <!--                <span class="material-icons nav-icon seller-shop"> shopping_cart </span>-->
-                <!--            </a>-->
+
+            <div>
+                <a href="/chat/buyer"><span class="material-icons white-text nav-icon buyer">mode_comment</span></a>
+            </div>
+            <div class="bag">
+                <a href="/shopping_cart/shopping_cart">
+                    <% if(cartQuantity !==0 && cartQuantity !==null ){ %>
+                        <div class="dot">
+                            <%= cartQuantity %>
+                        </div>
+                    <% } %>
+                    <span class="material-icons nav-icon buyer nav-icon"> shopping_cart </span>
+                </a>
+            </div>
 
         </div>
+    </div>
+
+
 </header>
     <main>
 
@@ -54,21 +67,30 @@
         <div class="lobby-container">
             <div class="lobby-users ">
 
-                <% buyerChatList.forEach(chat=>{ %>
-                <div class="user">
-                    <div class="img-container"> <img src=<%=chat.image_file_paths[0]%>>   </div>
-                    <div class="messageInfo_container">
-                        <div>
-                        <p><a href="/chat/room/<%=chat.chat_id%>"><%=chat.store_name%></a></p>
-<!--                        <p>This will be the message </p>-->
-<!--                            PLACEHOLDER-->
-                        </div>
-                    </div>
-                    <!--                            PLACEHOLDER-->
-                    <div class="date_container"><p>Today</p></div>
-                </div>
+                <%if( buyerChatList.length !== 0){
+                    buyerChatList.forEach(chat=>{
 
-                <%  }); %>
+                    let last_timestamp = parseInt(chat.last_timestamp)
+                    let date = new Date(last_timestamp);%>
+
+                <a href="/chat/room/<%=chat.chat_id%>">
+                    <div class="user">
+                        <div class="img-container"> <img src=<%=chat.image_file_paths[0]%>>   </div>
+                        <div class="messageInfo_container">
+                            <div>
+                                <p class="storeName"><%=chat.store_name%></p>
+                                <p><%=chat.last_message%></p>
+                            </div>
+                        </div>
+                        <!--                            PLACEHOLDER-->
+                        <div class="date_container"><p><span><%= date.getHours()+ ":"+ date.getMinutes()%></span></p></div>
+                    </div>
+                </a>
+
+                 <%  });
+                }else{%>
+                    <div class="comingSoon">Your inbox is empty.</div>
+                <%  } %>
 
             </div>
         </div>

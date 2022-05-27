@@ -46,7 +46,6 @@ function initMap() {
 	// ajax request to get the store data
 	fetch("/map/get_store_info", {
 		method: "POST",
-		// body: JSON.stringify('a'),
 		headers: {
 			"Content-Type": "application/json"
 		},
@@ -65,16 +64,3 @@ function initMap() {
 		window.initMap = initMap;
 	}
 	
-	// // call addMarker() here
-	// addMarker({
-	// 	coordinates: { lat: 49.0321, lng: -123.1222 },
-	// 	icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
-	// 	content: 
-	// 		`<div style="background-color: #F7F7F3; height: 200px; width: 200px; border-radius: 10px;">
-	//       <h4>Bioglow</h4> 
-	//       <p>2340 W 4th Avenue, Vancouver</p>
-	//       <p>7785629034</p>
-	//       <p>4.70</p>
-	//       <p>Fashion/Beauty
-	//     </div>`
-	// })

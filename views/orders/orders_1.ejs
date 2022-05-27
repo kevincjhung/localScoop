@@ -4,9 +4,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="/logo/localscooplogo2.png">
+
   <title>Your Shop Orders</title>
 
-  <%- include('../elements/seller_footer.ejs', {page:"page_landing"}) %>
     <link rel="stylesheet" href="../../styles.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <style>
@@ -19,6 +20,9 @@
       .slider {
         margin: 5%;
         overflow-x: scroll;
+        overflow-y: hidden;
+        display: grid;
+        max-height: 320px;
       }
 
       .slider-inner {
@@ -84,7 +88,7 @@
         <span>Product Posts</span>
       </div>
       <div class="nav-wrapper--right seller-shop">
-        <a href="#"><span class="material-icons nav-icon seller-shop">mode_comment</span></a>
+        <a href="/chat/store"><span class="material-icons nav-icon seller-shop">mode_comment</span></a>
         <a href="#"><span class="material-icons nav-icon seller-shop">settings</span></a>
       </div>
     </div>
@@ -101,7 +105,7 @@
           <div class="slider-img">
             <%= carouselSliderData[orderIndex].how_many_days_ago %> <br>
               <a href="/add_cart/add_cart/<%= carouselSliderData[orderIndex].product_id %>">
-                <img src="<%= carouselSliderData[orderIndex].photo_file_path %>" alt="" class="slideImg"> <br>
+                <img src="<%= carouselSliderData[orderIndex].image_file_paths %>" alt="" class="slideImg"> <br>
               </a>
               <%= carouselSliderData[orderIndex].product_name %> <br>
                 <%= carouselSliderData[orderIndex].product_price %> <br>

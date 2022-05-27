@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="icon" type="image/x-icon" href="/logo/localscooplogo2.png">
+
 
     <link
             rel="stylesheet"
@@ -29,23 +31,19 @@
 
 
 <header class="fixed_header">
-    <div class="nav-wrapper buyer buyer-shop-header">
-        <div class="nav-wrapper--left buyer">
-            <a href="/add_cart/products"><span class="material-icons nav-icon">arrow_back</span></a>
-        </div>
-        <div class="nav-wrapper--middle buyer">
-            Messages
-        </div>
-    </div>
+    <!--Back button-->
 
-    <div class="nav-wrapper--right buyer">
-        <div class="bag">
-            hi?
-            <!--            <a href="/shopping_cart/shopping_cart">-->
-            <!--                <span class="material-icons nav-icon seller-shop"> shopping_cart </span>-->
-            <!--            </a>-->
+    <nav class="nav-wrapper seller-shop">
+        <div class="nav-wrapper--left seller-shop">
+            <a onclick="history.back()"><span class="material-icons nav-icon">arrow_back</span></a>
         </div>
-    </div>
+        <div class="nav-wrapper--right seller-shop" style="margin-right:5px ">
+
+            <a href="/chat/store"><span class="material-icons nav-icon seller-shop">mode_comment</span></a>
+            <a href="#"><span class="material-icons nav-icon seller-shop">settings</span></a>
+        </div>
+    </nav>
+
 </header>
 <main>
 
@@ -55,19 +53,31 @@
     <div class="lobby-container">
         <div class="lobby-users ">
 
-            <% storeChatList.forEach(chat=>{ %>
-            <div class="user">
-                <div class="img-container"> <img src=<%=chat.buyer_profile_photo%>>   </div>
-                <div class="messageInfo_container">
-                    <div>
-                        <p><a href="/chat/room/<%=chat.chat_id%>"><%=chat.buyer_firstname%></a></p>
-<!--                        <p>This will be the message </p>-->
-                    </div>
-                </div>
-                <div class="date_container"><p>Today</p></div>
-            </div>
 
-            <%  }); %>
+<%if( storeChatList.length !== 0){
+storeChatList.forEach(chat=>{
+
+    let last_timestamp = parseInt(chat.last_timestamp)
+    let date = new Date(last_timestamp);%>
+            <a href="/chat/room/<%=chat.chat_id%>">
+                    <div class="user">
+
+                        <div class="img-container"> <img src=<%=chat.buyer_profile_photo%>>   </div>
+                        <div class="messageInfo_container">
+                            <div>
+                                <p class="storeName"><%=chat.buyer_firstname%></p>
+                                <p><%=chat.last_message%></p>
+                            </div>
+                        </div>
+                        <!--                            PLACEHOLDER-->
+            <div class="date_container"><p><span><%= date.getHours()+ ":"+ date.getMinutes()%></span></p></div>
+        </div>
+            </a>
+        <%  });
+
+            }else{%>
+                <div class="comingSoon">Your inbox is empty.</div>
+            <%  } %>
 
         </div>
     </div>
