@@ -96,6 +96,7 @@ async function getOrdersWithProductsPhotosByStoreId(store_id) {
 
 
     let orders = await database.query(query, [store_id]);
+    console.log(orders)
     return orders[0];
 }
 exports.getOrdersWithProductsPhotosByStoreId = getOrdersWithProductsPhotosByStoreId
