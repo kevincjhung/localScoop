@@ -12,7 +12,7 @@ const router = express.Router();
 
 const { append } = require("express/lib/response");
 const mysqlDB = require("../database/databaseAccessLayer");
-const { ConfigurationServicePlaceholders } = require("aws-sdk/lib/config_service_placeholders");
+// const { ConfigurationServicePlaceholders } = require("aws-sdk/lib/config_service_placeholders");
 
 
 /* express */

@@ -43,8 +43,7 @@ const checkoutRouter = require("./routes/checkout_router")
 const analyticsRouter = require("./routes/analytics_router")
 const wishlistRouter = require("./routes/wishlist_router")
 const buyerProfileRouter = require("./routes/buyer_profile_router")
-
-
+const mapsRouter = require("./routes/map_router")
 
 
 // const sellerHomeRouter = require("./routes/seller_home_router")
@@ -94,7 +93,7 @@ app.use("/buyer_setup", buyerSetupRouter)
 app.use("/chat", chatRouter)
 app.use("/checkout", checkoutRouter)
 app.use("/analytics", analyticsRouter)
-// app.use("/map", mapsRouter)
+app.use("/map", mapsRouter)
 app.use("/wishlist", wishlistRouter)
 app.use("/buyer_profile", buyerProfileRouter)
 

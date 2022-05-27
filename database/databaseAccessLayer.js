@@ -549,7 +549,7 @@ async function getCartItemsCount(buyerId) {
 }
 exports.getCartItemsCount = getCartItemsCount
 
-getCartItemsCount(8).then(console.log)
+
 
 
 
