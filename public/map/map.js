@@ -51,16 +51,16 @@ function initMap() {
 		},
 	})
 		.then(function (response) {
+			console.log(response)
+			// console.log(response.json())
 			return response.json();
 		})
 		.then((storeMarkerData) => {
-			
 			// loop through all the storesMarkerData, add marker
-			for (let storeIndex of storeMarkerData){
+			for (let storeIndex of storeMarkerData) {
 				addMarker(storeIndex)
 			}
 		})
 
-		window.initMap = initMap;
-	}
-	
+	window.initMap = initMap;
+}
