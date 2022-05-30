@@ -68,8 +68,6 @@ router.get("/buyer", help.buyerAuthorized, async (req, res) => {
     // Geting the chatrooms related to the store id
     let buyerChatList = await mysqlDB.getBuyerChats(buyerId)
     let cartQuantity = await mysqlDB.getCartItemsCount(buyerId)
-    // console.log("buyerChatList", buyerChatList)
-console.log(buyerChatList)
 
     res.render("chat/buyer_index", {buyerChatList:buyerChatList, cartQuantity});
 })

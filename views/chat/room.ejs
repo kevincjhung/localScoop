@@ -48,7 +48,13 @@
 <header class="fixed_header">
     <div class="nav-wrapper buyer buyer-shop-header">
         <div class="nav-wrapper--left buyer">
-            <a onclick="history.back()"><span class="material-icons nav-icon">arrow_back</span></a>
+            <%if(onlineUser =="buyer"){%>
+                <a href="/chat/buyer"> <span class="material-icons nav-icon">arrow_back</span></a>
+            <%} else {%>
+                <a href="/chat/store"> <span class="material-icons nav-icon">arrow_back</span></a>
+
+            <%}%>
+<!--            <a onclick="history.back()"><span class="material-icons nav-icon">arrow_back</span></a>-->
         </div>
         <div class="nav-wrapper--middle buyer">
             Messages
@@ -130,7 +136,14 @@
 
 
 <!--FOOTER-->
-<%- include('../elements/buyer_footer', {page:"blah"}) %>
+<%if(onlineUser =="buyer"){%>
+    <%- include('../elements/buyer_footer', {page:"room"}) %>
+<%} else {%>
+    <%- include('../elements/chat_store_footer', {page:"room"}) %>
+
+<%}%>
+
+
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
