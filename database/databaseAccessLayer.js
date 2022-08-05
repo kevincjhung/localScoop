@@ -67,7 +67,7 @@ exports.getProductsByStoreId = getProductsByStoreId
 
 
 /** 
- * NEEDS TO BE REWRITTEN  asdf
+ * NEEDS TO BE REWRITTEN  
  *  get all the orders by the giving store id in the order table
  * @param {number} store_id. 
  */
@@ -109,7 +109,7 @@ async function getOrdersWithProductsPhotosByStoreId_NoOrderProductTable(store_id
         return;
     }
    
-    let query = 'select * FROM `order`LEFT JOIN cart ON cart.cart_id = `order`.cart_id LEFT JOIN cart_product ON cart.cart_id = cart_product.cart_id LEFT JOIN product ON cart_product.product_id = product.product_id INNER JOIN product_photo ON product_photo.product_id = product.product_id WHERE store_id = ?'
+    let query = 'select * FROM `order` LEFT JOIN cart ON cart.cart_id = `order`.cart_id LEFT JOIN cart_product ON cart.cart_id = cart_product.cart_id LEFT JOIN product ON cart_product.product_id = product.product_id INNER JOIN product_photo ON product_photo.product_id = product.product_id WHERE store_id = ?'
 
     let ordersProductsStoreInfo = await database.query(query, [store_id])
     ordersProductsStoreInfo = ordersProductsStoreInfo[0]
@@ -133,8 +133,6 @@ exports.getOrdersWithProductsPhotosByStoreId_NoOrderProductTable = getOrdersWith
 // left join store as s
 // on s.store_id = p.store_id
 // where s.store_id = 1;
-
-
 
 
 
