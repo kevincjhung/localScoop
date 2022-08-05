@@ -13,7 +13,9 @@ router.get("/", (req, res) => {
 
 // AJAX-REQUEST: POST /map/get_store_info
 router.post('/get_store_info',help.buyerAuthorized, async (req, res) => {
+
 	let markerData = await mysqlDB.storesAndCategoryNames();
+	
 
 	let markerDataForFrontEnd = [];
 
@@ -28,16 +30,15 @@ router.post('/get_store_info',help.buyerAuthorized, async (req, res) => {
 			</div>`
 
 		console.log(store.coordinates)
-		// let coordinatesJSON = JSON.parse(`{ ${store.coordinates} }`)
+		let coordinatesJSON = JSON.parse(`{ ${store.coordinates} }`)
 		
-		// let pushObject = {
-		// 	coordinates: coordinatesJSON,
-		// 	content: theContent
-		// }
-
-		// markerDataForFrontEnd.push(pushObject)
+		let pushObject = {
+			coordinates: coordinatesJSON,
+			content: theContent
+		}
+		markerDataForFrontEnd.push(pushObject)
 	}
-	// res.status(200).send(markerDataForFrontEnd);
+	res.status(200).send(markerDataForFrontEnd);
 })
 
 module.exports = router;

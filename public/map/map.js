@@ -43,6 +43,7 @@ function initMap() {
 
 	map = new google.maps.Map(document.getElementById("map"), options);
 
+
 	// ajax request to get the store data
 	fetch("/map/get_store_info", {
 		method: "POST",
@@ -50,17 +51,15 @@ function initMap() {
 			"Content-Type": "application/json"
 		},
 	})
-		.then(function (response) {
-			return response.json();
-		})
-		.then((storeMarkerData) => {
-			
-			// loop through all the storesMarkerData, add marker
-			for (let storeIndex of storeMarkerData){
-				addMarker(storeIndex)
-			}
-		})
+	.then(function (response) {
+		return response.json();
+	})
+	.then((storeMarkerData) => {
+		// loop through all the storesMarkerData, add marker
+		for (let storeIndex of storeMarkerData) {
+			addMarker(storeIndex)
+		}
+	})
 
-		window.initMap = initMap;
-	}
-	
+	window.initMap = initMap;
+}
