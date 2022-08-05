@@ -1146,3 +1146,12 @@ async function storesAndCategoryNames() {
 }
 exports.storesAndCategoryNames = storesAndCategoryNames
 
+
+// Data visualization page ***TEST THIS FUNCTION
+async function productsSoldByStore(store_id){
+    let query = 'select * FROM `order` LEFT JOIN cart ON `order`.cart_id = `cart`.cart_id LEFT JOIN cart_product ON `cart_product`.cart_id = `cart`.cart_id LEFT JOIN product ON `product`.product_id = `cart_product`.product_id WHERE store_id = ?'
+
+    let result = await database.query(query);
+    return result[0];
+}
+exports.productsSoldByStore() = productsSoldByStore;
