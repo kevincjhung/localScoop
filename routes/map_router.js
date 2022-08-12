@@ -8,6 +8,7 @@ const { type } = require("express/lib/response");
 // GET /map/
 router.get("/", (req, res) => {
 	res.render("map_router/map")
+
 })
 
 
