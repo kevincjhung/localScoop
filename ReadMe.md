@@ -1,3 +1,7 @@
+# LocalScoop
+Note: the online database that was used for the project is not available anymore. To make the app work again, we will need to instantiate a new cloud mySQL database, and then seed with the SQL dump file inside /database.
+
+
 ## Git Fork workflow 
 
 step1: push your(Yasmina) code to your GitHub **Yasmina** branch
