@@ -139,7 +139,7 @@ app.use("/buyer_profile", buyerProfileRouter)
 
 
 app.get("/", (req, res) => {
-
+    console.log('app.get("/",')
     if (!req.session) {
         res.render("index")
     }
